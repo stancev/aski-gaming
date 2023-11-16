@@ -24,7 +24,7 @@ const Search = ({ search }: { search?: string }) => {
       // You can update debouncedSearchValue here if needed
       // setSearchValue(search);
     }
-  }, [search, debouncedSearchValue]);
+  }, [search, debouncedSearchValue, router]);
 
   useEffect(() => {
     if (initialRender.current) {
