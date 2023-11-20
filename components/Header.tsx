@@ -6,7 +6,10 @@ const Header = () => {
       <Link href="/" className="mr-2">
         Home
       </Link>
-      <Link href="/companies">Companies</Link>
+      <Link href="/companies" className="mr-2">
+        Companies
+      </Link>
+      <Link href="/protected/client">Protected (client)</Link>
     </nav>
   );
 };
