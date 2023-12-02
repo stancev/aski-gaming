@@ -16,10 +16,8 @@ export const authOptions = {
         password: {}
       },
       authorize: async (credentials: any) => {
-        console.log('test', credentials);
         if (credentials.google) {
           const googleUser = credentials.google;
-          console.log('test', 'google', googleUser);
         }
         try {
           const { data } = await axios.post(`${process.env.API_URL}/auth/local`, {
@@ -34,7 +32,6 @@ export const authOptions = {
               name: data.user.username,
               email: data.user.email
             };
-            console.log('test', sessionUser);
             return Promise.resolve({ ...sessionUser, email: sessionUser.email });
           } else {
             // If you return null or false then the credentials will be rejected
@@ -48,8 +45,6 @@ export const authOptions = {
   ],
   callbacks: {
     async session({ session, token }: { session: any; token: any }) {
-      console.log('test', 'session', session);
-      console.log('test', 'token', token);
       if (session.user) {
         session.user.id = token.sub as string;
       }

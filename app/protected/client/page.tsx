@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 
 const ClientProtectedPage = () => {
-  console.log('test', useSession());
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {

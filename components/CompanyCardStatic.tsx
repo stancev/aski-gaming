@@ -4,10 +4,10 @@ import Stars from '@/components/ui/stars';
 
 const CompanyCard = () => {
   return (
-    <Card className="w-304 h-178 2xl:w-464 2xl:h-253 lg:rounded-20 p-3 sm:p-4">
+    <Card className="w-304 h-178 2xl:w-464 2xl:h-253 lg:rounded-md p-3 sm:p-4">
       <div className="flex flex-row border-b border-gray-300 pb-4">
         <Image
-          className="rounded-lg mr-3"
+          className="rounded-sm mr-3"
           alt="netent logo"
           src="/netent.png"
           width={92}
@@ -23,7 +23,7 @@ const CompanyCard = () => {
             </div>
             <div className="relative w-4 h-4 lg:w-6 lg:h-6">
               <Image
-                className="rounded-lg object-cover"
+                className="rounded-sm object-cover"
                 alt="claimed company icon"
                 src="/claimed.svg"
                 fill={true}
