@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-//import { useRouter } from 'next/navigation';
+import { useCallback, useState } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import CategoriesFilter from '@/components/CategoriesFilter';
 import {
   Select,
   SelectContent,
@@ -14,54 +15,91 @@ import {
 } from '@/components/ui/select';
 import Search from '../Search';
 
-const Filters = () => {
-  // const router = useRouter();
+const Filters = ({ categories }: any) => {
+  const pathname = usePathname();
+  const router = useRouter();
   const [searchActive, setSearchActive] = useState(false);
-  // const { featured, ...otherSearchParams } = searchParams;
+  const searchParams = useSearchParams();
+  //console.log('test', searchParams.get('category'));
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      if (name === 'featured') {
+        params.delete('unclaimed');
+      }
+
+      if (name === 'unclaimed') {
+        params.delete('featured');
+      }
+
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   return (
     <section className="w-full max-w-[1424px] mb-10 flex justify-between items-center">
       <div className={cn('flex space-x-3 xl:space-x-6', searchActive && 'hidden')}>
-        <Select>
+        {/* <Select
+          defaultValue="0"
+          value={searchParams.get('category') ?? '0'}
+          onValueChange={value =>
+            router.push(pathname + '?' + createQueryString('category', value))
+          }
+        >
           <SelectTrigger className="w-[216px] h-[48px] rounded-[10px]">
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
+            <SelectItem value="0">All categories</SelectItem>
+            <SelectItem value="1">Payment Provider</SelectItem>
+            <SelectItem value="2">Marketing Agencies</SelectItem>
+            <SelectItem value="3">Betting Websites</SelectItem>
           </SelectContent>
-        </Select>
-
-        <Select>
+        </Select> */}
+        <CategoriesFilter categories={categories} createQueryString={createQueryString} />
+        <Select
+          value={searchParams.get('sort') ?? 'newest'}
+          onValueChange={value => router.push(pathname + '?' + createQueryString('sort', value))}
+        >
           <SelectTrigger className="w-[216px] h-[48px] rounded-[10px]">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="light">Newest</SelectItem>
-            <SelectItem value="dark">Most reviews</SelectItem>
-            <SelectItem value="system">Top rated</SelectItem>
+            <SelectItem value="newest">Newest</SelectItem>
+            <SelectItem value="most-reviews">Most reviews</SelectItem>
+            <SelectItem value="top-rated">Top rated</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div className={cn('space-x-3 xl:space-x-6', searchActive && 'hidden')}>
-        <Button asChild className="w-[206px] rounded-[42px]">
-          <Link
-            href={{
-              pathname: '/companies',
-              query: {
-                featured: true
-              }
-            }}
-          >
-            Featured
-          </Link>
+        <Button
+          onClick={() => {
+            router.push(pathname + '?' + createQueryString('featured', 'true'));
+          }}
+          className="w-[206px] rounded-[42px]"
+          variant={searchParams.has('featured') ? 'default' : 'outline'}
+        >
+          Featured
         </Button>
-        <Button className="w-[206px] rounded-[42px]" variant="outline">
+        <Button
+          onClick={() => {
+            router.push(pathname + '?' + createQueryString('unclaimed', 'true'));
+          }}
+          className="w-[206px] rounded-[42px]"
+          variant={searchParams.has('unclaimed') ? 'default' : 'outline'}
+        >
           Unclaimed
         </Button>
-        <Button className="w-[206px] rounded-[42px]" variant="outline">
-          <Link href="/companies">All companies</Link>
+        <Button
+          asChild
+          className="w-[206px] rounded-[42px]"
+          variant={!searchParams.size ? 'default' : 'outline'}
+        >
+          <Link href={pathname}>All companies</Link>
         </Button>
         <Button className="w-[48px]" variant="default" onClick={() => setSearchActive(true)}>
           <svg

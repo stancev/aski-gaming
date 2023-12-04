@@ -16,7 +16,7 @@ const CompanyCard = () => {
         <div className="flex flex-col justify-between space-y-0 mt-0 pt-0 flex-grow">
           <div className="flex justify-between">
             <div className="flex flex-col">
-              <CardTitle className="text-sm lg:text-[20px]">NetEnt</CardTitle>
+              <CardTitle className="text-heading text-sm lg:text-[20px]">NetEnt</CardTitle>
               <CardDescription className="text-xs lg:text-sm">
                 San Clemente, United States
               </CardDescription>
