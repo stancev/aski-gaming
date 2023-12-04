@@ -17,6 +17,7 @@ const CompaniesPage = async ({
   const categories = await getCategories();
   const companies = result.data;
   const pagination = result.meta.pagination;
+  console.log('hello');
 
   // Your URL params object
   const urlParams: Record<string, string> = { category: '1', featured: 'true' };
