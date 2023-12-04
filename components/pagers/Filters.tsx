@@ -20,7 +20,6 @@ const Filters = ({ categories }: any) => {
   const router = useRouter();
   const [searchActive, setSearchActive] = useState(false);
   const searchParams = useSearchParams();
-  //console.log('test', searchParams.get('category'));
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
