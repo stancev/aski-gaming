@@ -19,7 +19,7 @@ export async function getData(
   }
 
   if (category) {
-    url += `&filters[categories][id][$eq]=${category}`;
+    //url += `&filters[categories][id][$eq]=${category}`;
   }
 
   const res = await fetch(url);

@@ -12,7 +12,7 @@ const CompaniesPage = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const { page = '1', search = '', featured, category = '1', unclaimed } = searchParams;
+  const { page = '1', search = '', featured, category, unclaimed } = searchParams;
   const result = await getData(String(page), String(search), featured, category, unclaimed);
   const categories = await getCategories();
   const companies = result.data;
