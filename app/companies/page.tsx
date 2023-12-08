@@ -7,56 +7,18 @@ import Headings from '@/components/pagers/Headings';
 import Filters from '@/components/pagers/Filters';
 import Skeleton from '@/components/Skeleton';
 
+type SearchParams = { [key: string]: string };
+
 const CompaniesPage = async ({
   searchParams
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: SearchParams;
 }) => {
-  const { page = '1', search = '', featured, category, unclaimed } = searchParams;
-  const result = await getData(String(page), String(search), featured, category, unclaimed);
+  const { search = '' } = searchParams;
+  const result = await getData(searchParams);
   const categories = await getCategories();
   const companies = result.data;
   const pagination = result.meta.pagination;
-  console.log('hello');
-
-  // Your URL params object
-  const urlParams: Record<string, string> = { category: '1', featured: 'true' };
-
-  // Your existing strapiQuery object
-  const strapiQuery: Record<string, string> = {
-    featured: `filters[featured][$eq]=${featured}`,
-    unclaimed: `filters[unclaimed][$eq]=${unclaimed}`,
-    category: `filters[categories][id][$eq]=${category}`
-  };
-
-  // Function to generate strapiQuery based on URL params
-  function generateStrapiQuery(urlParams: Record<string, string>): string {
-    const updatedStrapiQuery: Record<string, string> = {};
-
-    // Iterate over keys in urlParams
-    for (const key in urlParams) {
-      if (urlParams.hasOwnProperty(key) && strapiQuery.hasOwnProperty(key)) {
-        // Update the value in strapiQuery with the corresponding value from urlParams
-        updatedStrapiQuery[key] = (strapiQuery[key] as string).replace(
-          `=${key}`,
-          `=${urlParams[key]}`
-        );
-      }
-    }
-
-    const queryStrings = Object.values(updatedStrapiQuery);
-
-    // Concatenate the strings with '&' separator
-    const queryString = `&${queryStrings.join('&')}`;
-
-    return queryString;
-  }
-
-  // Generate the updated strapiQuery
-  const updatedStrapiQuery = generateStrapiQuery(urlParams);
-
-  // Output the result
-  console.log('test', updatedStrapiQuery);
 
   return (
     <main className="flex min-h-screen flex-col items-center p-2 xl:p-16 bg-[#F6F8FC]">

@@ -16,7 +16,7 @@ const Header = () => {
             <Separator className="h-[34px]" orientation="vertical" />
             <Link href="/reviews">Sign Up</Link>
           </div>
-          <Button className="w-[157px]">Login</Button>
+          <Button className="w-[90px] md:w-[157px] h-8 md:h-12">Login</Button>
         </div>
       </section>
     </nav>

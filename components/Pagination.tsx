@@ -25,16 +25,16 @@ const Pagination = ({ search, pagination }: any) => {
               <path
                 d="M11 6L5 12L11 18"
                 stroke="#80287B"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M19 6L13 12L19 18"
                 stroke="#80287B"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </g>
           </svg>
@@ -60,9 +60,9 @@ const Pagination = ({ search, pagination }: any) => {
             <path
               d="M15 6L9 12L15 18"
               stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </Link>
@@ -130,9 +130,9 @@ const Pagination = ({ search, pagination }: any) => {
             <path
               d="M9 17.9998L15 11.9998L9 5.99976"
               stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </Link>
@@ -157,16 +157,16 @@ const Pagination = ({ search, pagination }: any) => {
             <path
               d="M13 18L19 12L13 6"
               stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M5 18L11 12L5 6"
               stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </Link>
