@@ -13,7 +13,7 @@ export async function getData(searchParams: SearchParams) {
 
   const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
 
-  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=6`;
+  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=6&populate=*`;
 
   if (updatedStrapiQuery) {
     url += updatedStrapiQuery;

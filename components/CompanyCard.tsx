@@ -2,33 +2,36 @@ import Image from 'next/image';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import Stars from '@/components/ui/stars';
 
-const CompanyCard = () => {
+const CompanyCard = ({ company }: { company: any }) => {
+  console.log(`${process.env.STRAPI_URL}${company.logo.url}`);
   return (
     <Card className="w-304 h-178 2xl:w-464 2xl:h-253 lg:rounded-md p-3 sm:p-4">
       <div className="flex flex-row border-b border-gray-300 pb-4">
         <Image
           className="rounded-sm mr-3"
           alt="netent logo"
-          src="/netent.png"
+          src={`${process.env.STRAPI_URL}${company.logo.url}`}
           width={92}
           height={92}
         />
         <div className="flex flex-col justify-between space-y-0 mt-0 pt-0 flex-grow">
           <div className="flex justify-between">
             <div className="flex flex-col">
-              <CardTitle className="text-heading text-sm lg:text-[20px]">NetEnt</CardTitle>
+              <CardTitle className="text-heading text-sm lg:text-[20px]">{company.name}</CardTitle>
               <CardDescription className="text-xs lg:text-sm">
-                San Clemente, United States
+                {`${company.city}, ${company.country}`}
               </CardDescription>
             </div>
-            <div className="relative w-4 h-4 lg:w-6 lg:h-6">
-              <Image
-                className="rounded-sm object-cover"
-                alt="claimed company icon"
-                src="/claimed.svg"
-                fill={true}
-              />
-            </div>
+            {company.claimed && (
+              <div className="relative w-4 h-4 lg:w-6 lg:h-6">
+                <Image
+                  className="rounded-sm object-cover"
+                  alt="claimed company icon"
+                  src="/claimed.svg"
+                  fill={true}
+                />
+              </div>
+            )}
           </div>
           <div className="flex justify-between items-center">
             <Stars />
@@ -39,10 +42,7 @@ const CompanyCard = () => {
       <div className="flex" style={{ height: '109px' }}>
         <div className="pt-4 flex flex-col justify-between flex-grow">
           <div>
-            <p className="text-sm line-clamp-2">
-              With more than 24 years of cash service experience and the most advanced and it goes
-              like this so text and fara a tufar...
-            </p>
+            <p className="text-sm line-clamp-2">{company.description}</p>
           </div>
           <div className="flex flex-grow items-end space-x-2">
             <div className="flex items-center rounded-3xl text-primary bg-blue-100 h-8 px-5 text-xs font-semibold">

@@ -8,7 +8,7 @@ const CompanyList: React.FC<Props> = async ({ companies }) => {
   return (
     <>
       {companies.map((company: any) => (
-        <CompanyCard key={company.id} />
+        <CompanyCard key={company.id} company={company} />
       ))}
     </>
   );
