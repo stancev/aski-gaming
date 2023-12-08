@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import CategoriesFilter from '@/components/CategoriesFilter';
@@ -27,10 +28,10 @@ const Filters = ({ categories }: any) => {
       params.set(name, value);
 
       if (name === 'featured') {
-        params.delete('unclaimed');
+        params.delete('claimed');
       }
 
-      if (name === 'unclaimed') {
+      if (name === 'claimed') {
         params.delete('featured');
       }
 
@@ -40,47 +41,75 @@ const Filters = ({ categories }: any) => {
   );
 
   return (
-    <section className="w-full max-w-[1424px] mb-10 flex justify-between items-center">
-      <div className={cn('flex space-x-3 xl:space-x-6', searchActive && 'hidden')}>
-        {/* <Select
-          defaultValue="0"
-          value={searchParams.get('category') ?? '0'}
-          onValueChange={value =>
-            router.push(pathname + '?' + createQueryString('category', value))
-          }
+    <section className="w-full max-w-[1424px] h-16 mb-10 flex flex-col items-center">
+      <div className={cn('w-full flex', searchActive && 'hidden')}>
+        <div className={cn('flex space-x-1 xl:space-x-6', searchActive && 'hidden')}>
+          <CategoriesFilter categories={categories} createQueryString={createQueryString} />
+          <Select
+            value={searchParams.get('sort') ?? 'newest'}
+            onValueChange={value => router.push(pathname + '?' + createQueryString('sort', value))}
+          >
+            <SelectTrigger className="w-[144px] sm:w-[216px] h-10 sm:h-12 rounded-[10px] text-heading sm:text-sm lg:text-base font-semibold">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="newest">Newest</SelectItem>
+              <SelectItem value="most-reviews">Most reviews</SelectItem>
+              <SelectItem value="top-rated">Top rated</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div
+          className={cn('hidden lg:flex space-x-1 xl:space-x-3 ml-auto', searchActive && 'hidden')}
         >
-          <SelectTrigger className="w-[216px] h-[48px] rounded-[10px]">
-            <SelectValue placeholder="Select category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="0">All categories</SelectItem>
-            <SelectItem value="1">Payment Provider</SelectItem>
-            <SelectItem value="2">Marketing Agencies</SelectItem>
-            <SelectItem value="3">Betting Websites</SelectItem>
-          </SelectContent>
-        </Select> */}
-        <CategoriesFilter categories={categories} createQueryString={createQueryString} />
-        <Select
-          value={searchParams.get('sort') ?? 'newest'}
-          onValueChange={value => router.push(pathname + '?' + createQueryString('sort', value))}
+          <Button
+            onClick={() => {
+              router.push(pathname + '?' + createQueryString('featured', 'true'));
+            }}
+            size="filter"
+            variant={searchParams.has('featured') ? 'default' : 'outline'}
+          >
+            Featured
+          </Button>
+          <Button
+            onClick={() => {
+              router.push(pathname + '?' + createQueryString('claimed', 'false'));
+            }}
+            variant={searchParams.has('claimed') ? 'default' : 'outline'}
+            size="filter"
+          >
+            Unclaimed
+          </Button>
+          <Button asChild variant={!searchParams.size ? 'default' : 'outline'} size="filter">
+            <Link className="px-0 sm:px-4" href={pathname}>
+              All companies
+            </Link>
+          </Button>
+        </div>
+        <Button
+          size="square"
+          variant="default"
+          className="ml-auto xl:ms-3"
+          onClick={() => {
+            setSearchActive(true);
+            router.push(pathname);
+          }}
         >
-          <SelectTrigger className="w-[216px] h-[48px] rounded-[10px]">
-            <SelectValue placeholder="Sort by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="newest">Newest</SelectItem>
-            <SelectItem value="most-reviews">Most reviews</SelectItem>
-            <SelectItem value="top-rated">Top rated</SelectItem>
-          </SelectContent>
-        </Select>
+          <Image alt="search-icon" src="/search.svg" width={22} height={22} />
+        </Button>
       </div>
-      <div className={cn('space-x-3 xl:space-x-6', searchActive && 'hidden')}>
+      <div
+        className={cn(
+          'lg:hidden flex justify-between w-full space-x-1 xl:space-x-6 mt-4',
+          searchActive && 'hidden'
+        )}
+      >
         <Button
           onClick={() => {
             router.push(pathname + '?' + createQueryString('featured', 'true'));
           }}
-          className="w-[206px] rounded-[42px]"
           variant={searchParams.has('featured') ? 'default' : 'outline'}
+          size="filter"
         >
           Featured
         </Button>
@@ -88,38 +117,16 @@ const Filters = ({ categories }: any) => {
           onClick={() => {
             router.push(pathname + '?' + createQueryString('unclaimed', 'true'));
           }}
-          className="w-[206px] rounded-[42px]"
-          variant={searchParams.has('unclaimed') ? 'default' : 'outline'}
+          variant={searchParams.has('claimed') ? 'default' : 'outline'}
+          size="filter"
         >
           Unclaimed
         </Button>
-        <Button
-          asChild
-          className="w-[206px] rounded-[42px]"
-          variant={!searchParams.size ? 'default' : 'outline'}
-        >
+        <Button asChild variant={!searchParams.size ? 'default' : 'outline'} size="filter">
           <Link href={pathname}>All companies</Link>
         </Button>
-        <Button className="w-[48px]" variant="default" onClick={() => setSearchActive(true)}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            fill="none"
-          >
-            <path
-              d="M9.62193 19.2423C14.9356 19.2423 19.2432 14.9348 19.2432 9.62107C19.2432 4.30738 14.9356 -0.00012207 9.62193 -0.00012207C4.30824 -0.00012207 0.000688553 4.30743 0.000688553 9.62111C0.000688553 14.9348 4.30829 19.2423 9.62193 19.2423ZM9.62193 2.74882C13.4174 2.74882 16.4942 5.82563 16.4942 9.62111C16.4942 13.4166 13.4174 16.4934 9.62193 16.4934C5.82644 16.4934 2.74963 13.4166 2.74963 9.62111C2.74963 5.82563 5.82649 2.74882 9.62193 2.74882Z"
-              fill="white"
-            />
-            <path
-              d="M20.6176 21.9912C20.9829 21.9934 21.3341 21.8499 21.5934 21.5926C22.1324 21.058 22.136 20.1878 21.6014 19.6489C21.5987 19.6462 21.5961 19.6435 21.5934 19.6409L16.4255 14.4729C15.8675 13.934 14.9783 13.9493 14.4393 14.5073C13.9004 15.0652 13.9158 15.9544 14.4737 16.4934L19.6417 21.5926C19.9011 21.8499 20.2522 21.9934 20.6176 21.9912Z"
-              fill="white"
-            />
-          </svg>
-        </Button>
       </div>
-      <Search searchActive={searchActive} setSearchActive={setSearchActive} />
+      {searchActive && <Search searchActive={searchActive} setSearchActive={setSearchActive} />}
     </section>
   );
 };

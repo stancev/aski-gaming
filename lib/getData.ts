@@ -1,25 +1,22 @@
-export async function getData(
-  page: string,
-  search: string,
-  featured: any,
-  category: any,
-  unclaimed: any
-) {
+import { generateQueryParams } from './utils';
+type SearchParams = { [key: string]: string };
+
+// Your existing strapiQuery object
+const strapiQuery: Record<string, string> = {
+  featured: 'filters[featured][$eq]=${featured}',
+  claimed: 'filters[claimed][$eq]=${unclaimed}',
+  category: 'filters[categories][id][$eq]=${category}'
+};
+
+export async function getData(searchParams: SearchParams) {
+  const page = searchParams.page || 1;
+
+  const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
+
   let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=6`;
-  if (search) {
-    url += `&filters[name][$contains]=${search}`;
-  }
 
-  if (featured) {
-    url += `&filters[featured][$eq]=${featured}`;
-  }
-
-  if (unclaimed) {
-    url += `&filters[unclaimed][$eq]=${unclaimed}`;
-  }
-
-  if (category) {
-    url += `&filters[categories][id][$eq]=${category}`;
+  if (updatedStrapiQuery) {
+    url += updatedStrapiQuery;
   }
 
   const res = await fetch(url);
