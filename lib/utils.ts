@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -7,7 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 
 type SearchParams = { [key: string]: string };
 
-export function generateQueryParams(searchParams: SearchParams, strapiQuery: Record<string, string>): string {
+export function generateQueryParams(
+  searchParams: SearchParams,
+  strapiQuery: Record<string, string>
+): string {
   const updatedStrapiQuery: Record<string, string> = {};
 
   //if (Object.keys(searchParams).length < 1) return '';
@@ -30,4 +33,23 @@ export function generateQueryParams(searchParams: SearchParams, strapiQuery: Rec
   const queryString = `&${Object.values(updatedStrapiQuery).join('&')}`;
 
   return queryString;
+}
+
+export const generateArray = (start: number, length: number) => {
+  return Array.from({ length }, (_, i) => start + i);
+};
+
+export function generatePages(currentPage: number, pageCount: number) {
+  if (pageCount < 3) {
+    if (currentPage === 2) {
+      return generateArray(currentPage - 1, 2);
+    }
+    return generateArray(currentPage, pageCount);
+  }
+
+  if (currentPage === pageCount || currentPage === pageCount - 1) {
+    return generateArray(currentPage - 2, 3);
+  }
+
+  return generateArray(currentPage, 3);
 }

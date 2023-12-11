@@ -13,11 +13,15 @@ export async function getData(searchParams: SearchParams) {
 
   const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
 
-  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=6`;
+  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=6&populate=*`;
 
   if (updatedStrapiQuery) {
     url += updatedStrapiQuery;
   }
+
+  // const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  // const res = await delay(7000).then(() => fetch(url));
 
   const res = await fetch(url);
 
@@ -25,6 +29,11 @@ export async function getData(searchParams: SearchParams) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data');
   }
+  const {
+    data,
+    meta: { pagination }
+  } = await res.json();
 
-  return res.json();
+  //return res.json();
+  return { data, pagination };
 }

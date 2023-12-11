@@ -3,17 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useDebounce } from 'use-debounce';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 
-interface Props {
-  search?: string;
-  searchActive?: boolean;
-  setSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Search: React.FC<Props> = ({ searchActive, setSearchActive }) => {
+const Search = () => {
   const searchParams = useSearchParams();
   const hasSearch = searchParams.has('search');
   const search = searchParams.get('search');
@@ -27,9 +20,9 @@ const Search: React.FC<Props> = ({ searchActive, setSearchActive }) => {
 
   useEffect(() => {
     if (search !== debouncedSearchValue && debouncedSearchValue) {
-      router.push(`/companies?search=${debouncedSearchValue}`);
+      router.push(`${pathname}?search=${debouncedSearchValue}`);
     }
-  }, [search, debouncedSearchValue, router]);
+  }, [search, debouncedSearchValue, router, pathname]);
 
   useEffect(() => {
     if (initialRender.current) {
@@ -38,24 +31,18 @@ const Search: React.FC<Props> = ({ searchActive, setSearchActive }) => {
     }
 
     if (!debouncedSearchValue) {
-      router.push(`/companies`);
+      router.push(`${pathname}?search=`);
     } else {
-      router.push(`/companies?search=${debouncedSearchValue}`);
+      router.push(`${pathname}?search=${debouncedSearchValue}`);
     }
-  }, [debouncedSearchValue, router]);
+  }, [debouncedSearchValue, router, pathname]);
 
   const handleCloseSearch = () => {
-    setSearchActive(false);
     router.push(pathname);
   };
 
   return (
-    <section
-      className={cn(
-        'w-full max-w-[1424px] mb-10 flex justify-center items-center',
-        !searchActive && 'hidden'
-      )}
-    >
+    <section className="w-full max-w-[1424px] mb-10 flex justify-center items-center">
       <div className="relative sm:w-[600px] xl:w-[636px] rounded-[10px] h-14 md:h-16">
         <Input
           className="pl-16 sm:pl-24 pr-10 py-2 w-full h-full"
