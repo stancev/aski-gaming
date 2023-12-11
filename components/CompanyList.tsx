@@ -1,14 +1,16 @@
 import CompanyCard from '@/components/CompanyCard';
+import { getData } from '@/lib/getData';
 
 interface Props {
-  companies: any;
+  searchParams: any;
 }
 
-const CompanyList: React.FC<Props> = async ({ companies }) => {
+const CompanyList: React.FC<Props> = async ({ searchParams }) => {
+  const { data } = await getData(searchParams);
   return (
     <>
-      {companies.map((company: any) => (
-        <CompanyCard key={company.id} />
+      {data.map((company: any) => (
+        <CompanyCard key={company.id} company={company} />
       ))}
     </>
   );

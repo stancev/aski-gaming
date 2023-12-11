@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useUpdateLocation } from '@/hooks/useUpadeLocation';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -21,26 +22,25 @@ interface Category {
 
 interface Props {
   categories: Category[];
-  // eslint-disable-next-line
-  createQueryString: (name: string, value: string) => string;
 }
 
-const CategoriesFilter = ({ categories, createQueryString }: Props) => {
+const CategoriesFilter = ({ categories }: Props) => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
 
+  const updateLocation = useUpdateLocation();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const handleCategoryChange = (currentValue: string) => {
-    const lowerCaseValue = currentValue.toLowerCase();
+    const lowerCaseValue = currentValue.toLowerCase().trim();
     const matchedCategory = categories.find(
-      category => category.name.toLowerCase() === lowerCaseValue
+      category => category.name.toLowerCase().trim() === lowerCaseValue
     );
 
     if (matchedCategory) {
-      router.push(pathname + '?' + createQueryString('category', matchedCategory.id.toString()));
+      updateLocation('category', matchedCategory.id.toString());
       return;
     }
 
@@ -51,7 +51,7 @@ const CategoriesFilter = ({ categories, createQueryString }: Props) => {
     if (!searchParams.has('category')) {
       return 'All categories';
     }
-    return categories.find(category => category.name.toLowerCase() === value)?.name;
+    return categories.find(category => category.name.toLowerCase().trim() === value)?.name;
   };
 
   return (
@@ -61,9 +61,11 @@ const CategoriesFilter = ({ categories, createQueryString }: Props) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[160px] sm:w-[200px] h-10 sm:h-12 justify-between text-heading sm:text-sm lg:text-base"
+          className="w-[160px] sm:w-[200px] h-10 sm:h-12 justify-between sm:text-sm lg:text-base"
         >
-          {value ? setActiveCategory(value) : 'All categories'}
+          <div className="w-[160px] sm:w-max-[110px] overflow-hidden whitespace-nowrap text-overflow-ellipsis text-overflow-ellipsis">
+            {value ? setActiveCategory(value) : 'All categories'}
+          </div>
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
