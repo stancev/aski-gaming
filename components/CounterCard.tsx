@@ -5,13 +5,13 @@ interface CounterCardProps {
   count: string;
   label: string;
   svg: string;
-  className?: string; // Add className prop
+  className?: string;
 }
 
 const CounterCard = ({ bgColor, count, label, svg, className }: CounterCardProps) => {
   return (
     <div
-      className={`max-h-[306px] min-h-[161px] w-[300px] flex-col items-start rounded-[40.853px] ${bgColor} inline-block flex-none py-12 pl-8 pr-20 ${className}`}
+      className={`max-h-[306px] min-h-[161px]  w-[300px] flex-col items-start rounded-[40.853px] ${bgColor} inline-block flex-none py-12 pl-8 pr-20 ${className}`}
     >
       <svg
         className="mt-1.5 aspect-[0.96] w-[101px] max-w-full overflow-hidden object-contain object-center"
