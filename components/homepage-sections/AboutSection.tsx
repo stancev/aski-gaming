@@ -12,7 +12,7 @@ const AboutSection = () => {
         </div>
         <div className="mx-4 hidden h-[315px] border-l border-[#E7E1EA;] md:block" />
         <div className="w-full md:w-2/3 md:pl-10">
-          <p className="text-sm md:text-[16px]">
+          <p className="text-sm md:text-base">
             AskIGaming, a hub for iGaming enthusiasts, leverages over a decade of industry
             experience to offer a unique platform where users contribute reviews and insights. By
             empowering our community to share their experiences with various iGaming companies, we
@@ -23,9 +23,7 @@ const AboutSection = () => {
           </p>
           <div className="flex w-full">
             <Link href="/companies" className="mx-auto mt-10 w-full sm:w-[187px] lg:mx-0">
-              <Button className="mx-auto w-full bg-primary sm:w-[187px] lg:mx-0">
-                View all companies
-              </Button>
+              <Button className="mx-auto w-full sm:w-[187px] lg:mx-0">View all companies</Button>
             </Link>
           </div>
         </div>

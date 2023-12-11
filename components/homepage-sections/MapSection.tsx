@@ -19,9 +19,7 @@ const MapSection = () => {
           </div>
           <div className="flex w-full">
             <Link href="/companies" className="mx-auto mt-10 w-full sm:w-[187px]">
-              <Button className="mx-auto w-full bg-primary sm:w-[187px] lg:mx-0">
-                View all companies
-              </Button>
+              <Button className="mx-auto w-full sm:w-[187px] lg:mx-0">View all companies</Button>
             </Link>
           </div>
         </div>
