@@ -14,10 +14,10 @@ const CounterSection = () => {
     >
       <div className="flex max-w-[1420px] flex-col-reverse items-center justify-between lg:flex-row">
         <div className="w-full p-4 lg:mb-0 lg:w-[40%]">
-          <h2 className="my-6 text-[20px] font-bold text-[#463A5E] md:text-[48px]">
+          <h2 className="my-6 text-[20px] font-bold text-heading md:text-[48px]">
             Every Review Matters
           </h2>
-          <p className="text-sm text-[#6E6A78] md:text-[16px]">
+          <p className="text-sm md:text-[16px]">
             Every review plays a crucial role in building a comprehensive and honest overview of the
             iGaming world, offering invaluable insights to both newcomers and seasoned players
             alike. <br></br>
@@ -27,7 +27,7 @@ const CounterSection = () => {
           </p>
           <div className="flex w-full">
             <Link href="/companies" className="mx-auto mt-10 w-full sm:w-[187px] lg:mx-0">
-              <Button className="mx-auto w-full bg-[#80287B] text-white sm:w-[187px] lg:mx-0">
+              <Button className="mx-auto w-full bg-primary sm:w-[187px] lg:mx-0">
                 View all reviews
               </Button>
             </Link>
