@@ -4,21 +4,15 @@ import { getCategories } from '@/lib/categories';
 import Pagination from '@/components/Pagination';
 import CompanyList from '@/components/CompanyList';
 import Headings from '@/components/pagers/Headings';
-import Filters from '@/components/pagers/Filters';
+import FiltersSection from '@/components/pagers/FiltersSection';
 import Skeleton from '@/components/Skeleton';
 
 type SearchParams = { [key: string]: string };
 
-const CompaniesPage = async ({
-  searchParams
-}: {
-  searchParams: SearchParams;
-}) => {
-  const { search = '' } = searchParams;
-  const result = await getData(searchParams);
+const CompaniesPage = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const { pagination } = await getData(searchParams);
   const categories = await getCategories();
-  const companies = result.data;
-  const pagination = result.meta.pagination;
+  const isSearchOpen = searchParams.hasOwnProperty('search');
 
   return (
     <main className="flex min-h-screen flex-col items-center p-2 xl:p-16 bg-[#F6F8FC]">
@@ -26,14 +20,15 @@ const CompaniesPage = async ({
         title="Connect With 800+ Industry Players"
         subtitle="Secondary line of text that goes here"
       />
-      <Filters categories={categories.data} />
+      <FiltersSection categories={categories.data} isSearchOpen={isSearchOpen} />
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:max-lg:mt-10">
         <Suspense fallback={<Skeleton />}>
-          <CompanyList companies={companies} />
+          <CompanyList searchParams={searchParams} />
         </Suspense>
       </section>
-      <Pagination pagination={pagination} search={search} />
+
+      <Pagination pathname="/companies" pagination={pagination} searchParams={searchParams} />
     </main>
   );
 };

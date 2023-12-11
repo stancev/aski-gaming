@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import Stars from '@/components/ui/stars';
+import { cn } from '@/lib/utils';
+import { Company } from '@/types/companies';
 
-const CompanyCard = ({ company }: { company: any }) => {
-  console.log(`${process.env.STRAPI_URL}${company.logo.url}`);
+const CompanyCard = ({ company }: { company: Company }) => {
+  const categoriesNumber = company.categories.length;
   return (
     <Card className="w-304 h-178 2xl:w-464 2xl:h-253 lg:rounded-md p-3 sm:p-4">
       <div className="flex flex-row border-b border-gray-300 pb-4">
@@ -44,15 +46,29 @@ const CompanyCard = ({ company }: { company: any }) => {
           <div>
             <p className="text-sm line-clamp-2">{company.description}</p>
           </div>
-          <div className="flex flex-grow items-end space-x-2">
-            <div className="flex items-center rounded-3xl text-primary bg-blue-100 h-8 px-5 text-xs font-semibold">
-              <p>Supplier</p>
+          <div className="flex space-x-2">
+            <div className="flex flex-grow items-end space-x-2">
+              {company?.categories.slice(0, 2).map((category: any) => (
+                <div
+                  key={category.id}
+                  className="flex items-center rounded-3xl text-primary bg-blue-100 max-w-[160px] h-8 px-2 2xl:px-5 text-xs font-semibold line-clamp-1"
+                >
+                  <p
+                    title={category.name}
+                    className="overflow-hidden overflow-ellipsis whitespace-nowrap"
+                  >
+                    {category.name}
+                  </p>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center rounded-3xl text-primary bg-blue-100 h-8 px-5 text-xs font-semibold">
-              <p>Michael Daly</p>
-            </div>
-            <div className="flex items-center rounded-3xl text-primary bg-blue-100 h-8 px-5 text-xs font-semibold">
-              <p>Test</p>
+            <div
+              className={cn(
+                'flex items-center rounded-3xl text-primary bg-blue-100 h-8 px-5 text-xs font-semibold',
+                categoriesNumber < 3 && 'opacity-0'
+              )}
+            >
+              <p className="">+{categoriesNumber - 2}</p>
             </div>
           </div>
         </div>

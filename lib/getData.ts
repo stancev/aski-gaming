@@ -19,12 +19,21 @@ export async function getData(searchParams: SearchParams) {
     url += updatedStrapiQuery;
   }
 
+  // const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  // const res = await delay(7000).then(() => fetch(url));
+
   const res = await fetch(url);
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data');
   }
+  const {
+    data,
+    meta: { pagination }
+  } = await res.json();
 
-  return res.json();
+  //return res.json();
+  return { data, pagination };
 }
