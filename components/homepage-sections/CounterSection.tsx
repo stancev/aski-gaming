@@ -36,29 +36,29 @@ const CounterSection = () => {
         <div className="grid gap-1 overflow-hidden pl-4 z-10">
           <div className="scrollbar-hide flex flex-nowrap gap-4 overflow-x-auto lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:overflow-visible">
             <CounterCard
-              bgColor="bg-[#FFD89E]"
+              bgColor="#FFD89E"
               count="4,000+"
               label="Members"
-              svg="/icons/people-ico.svg"
+              svg="people-ico.svg"
               className="lg:mt-20"
             />
             <CounterCard
-              bgColor="bg-[#78A3B1]"
+              bgColor="#78A3B1"
               count="300+"
               label="Reviews"
-              svg="/icons/star-ico.svg"
+              svg="star-ico.svg"
             />
             <CounterCard
-              bgColor="bg-[#AB75AB]"
+              bgColor="#AB75AB"
               count="1,000+"
               label="Listed Companies"
-              svg="/icons/building-ico.svg"
+              svg="building-ico.svg"
             />
             <CounterCard
-              bgColor="bg-[#80B2FF]"
+              bgColor="#80B2FF"
               count="10,000+"
               label="Unique Visitors"
-              svg="/icons/chart-ico.svg"
+              svg="chart-ico.svg"
               className="lg:-mt-20"
             />
           </div>
