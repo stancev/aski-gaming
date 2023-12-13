@@ -17,11 +17,7 @@ const ReviewCard = () => {
           />
         </div>
         <div className="flex flex-col justify-start">
-          <Link
-            href={{
-              pathname: '/companies'
-            }}
-          >
+          <Link href="/companies">
             <p className="text-sm font-semibold text-heading xl:text-base">Mozzartbet</p>
           </Link>
           <div className="flex">
@@ -33,11 +29,7 @@ const ReviewCard = () => {
           </div>
         </div>
       </CardHeader>
-      <Link
-        href={{
-          pathname: '/reviews'
-        }}
-      >
+      <Link href="/reviews">
         <CardTitle className="mt-3 text-base font-semibold text-heading xl:mt-8 xl:text-[22px]">
           Pretty Cool Company
         </CardTitle>
@@ -46,11 +38,7 @@ const ReviewCard = () => {
         Most advanced and it goes like this so farWith more than 24 years...
       </CardDescription>
       <div className="mt-2 flex justify-between gap-5 pr-2">
-        <Link
-          href={{
-            pathname: '/reviews'
-          }}
-        >
+        <Link href="/reviews">
           <p className="text-xs font-semibold text-primary xl:text-sm">Full Review</p>
         </Link>
         <Stars />
@@ -66,11 +54,7 @@ const ReviewCard = () => {
         />
         <div className="flex flex-col justify-center">
           <div className="flex items-center justify-start">
-            <Link
-              href={{
-                pathname: '/reviews'
-              }}
-            >
+            <Link href="/reviews">
               <h4 className="mr-3 text-base font-semibold capitalize text-heading xl:text-xl">
                 Reviewer
               </h4>
