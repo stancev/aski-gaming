@@ -14,7 +14,7 @@ const CounterSection = () => {
         alt="Background"
         className="absolute z-0"
       />
-      <div className="flex max-w-[1420px] flex-col-reverse items-center justify-between lg:flex-row">
+      <div className="flex max-w-[1420px] flex-col-reverse items-center justify-between lg:flex-row z-10">
         <div className="w-full p-4 lg:mb-0 lg:w-[40%]">
           <h2 className="my-6 text-[20px] font-bold text-heading md:text-[48px]">
             Every Review Matters
@@ -33,33 +33,26 @@ const CounterSection = () => {
             </Link>
           </div>
         </div>
-        <div className="grid gap-1 overflow-hidden pl-4 z-10">
+        <div className="grid gap-1 overflow-hidden pl-4">
           <div className="scrollbar-hide flex flex-nowrap gap-4 overflow-x-auto lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:overflow-visible">
             <CounterCard
-              bgColor="#FFD89E"
               count="4,000+"
               label="Members"
               svg="people-ico.svg"
-              className="lg:mt-20"
+              className="lg:mt-20 bg-[#FFD89E]"
             />
+            <CounterCard count="300+" label="Reviews" svg="star-ico.svg" className="bg-[#78A3B1]" />
             <CounterCard
-              bgColor="#78A3B1"
-              count="300+"
-              label="Reviews"
-              svg="star-ico.svg"
-            />
-            <CounterCard
-              bgColor="#AB75AB"
               count="1,000+"
               label="Listed Companies"
               svg="building-ico.svg"
+              className="bg-[#80287B99]"
             />
             <CounterCard
-              bgColor="#80B2FF"
               count="10,000+"
               label="Unique Visitors"
               svg="chart-ico.svg"
-              className="lg:-mt-20"
+              className="lg:-mt-20 bg-[#80B2FF]"
             />
           </div>
         </div>

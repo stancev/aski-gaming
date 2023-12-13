@@ -2,23 +2,16 @@ import React from 'react';
 import Image from 'next/image';
 
 interface CounterCardProps {
-  bgColor: string;
   count: string;
   label: string;
   svg: string;
   className?: string;
 }
 
-const CounterCard = ({
-  bgColor,
-  count,
-  label,
-  svg,
-  className,
-}: CounterCardProps) => {
+const CounterCard = ({ count, label, svg, className }: CounterCardProps) => {
   return (
     <div
-      className={`max-h-[306px] min-h-[161px] w-[300px] flex-col items-start rounded-[40.853px] bg-[${bgColor}] inline-block flex-none py-12 pl-8 pr-20 ${className}`}
+      className={`max-h-[306px] min-h-[161px] w-[300px] flex-col items-start rounded-[40.853px] inline-block flex-none py-12 pl-8 pr-20 ${className}`}
     >
       <Image
         src={`/icons/${svg}`}
