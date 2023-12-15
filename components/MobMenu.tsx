@@ -7,7 +7,6 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import Link from 'next/link';
-import AskiLogo from '@/components/AskiLogo';
 import Image from 'next/image';
 
 export default function DialogDemo() {
@@ -18,7 +17,11 @@ export default function DialogDemo() {
       </DialogTrigger>
       <DialogContent className="h-screen min-w-full">
         <DialogHeader>
-          <AskiLogo />
+          <DialogClose asChild>
+            <Link href="/" className="py-2 text-base leading-10">
+              <Image src="/askigaming-logo.svg" alt="AskIgaming Logo" width={166} height={31} />
+            </Link>
+          </DialogClose>
           <DialogDescription>
             <div className="flex flex-col items-start lg:hidden">
               <DialogClose asChild>
