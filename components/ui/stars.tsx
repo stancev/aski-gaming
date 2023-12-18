@@ -45,11 +45,16 @@ const Stars = () => {
       </svg>
 
       {/* Half-filled star */}
-      <svg className="w-[13px] h-[12px] md:w-[19px] md:h-[18px]">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 19 18"
+        fill="hsl(var(--primary))"
+        className="w-[13px] h-[12px] md:w-[19px] md:h-[18px]"
+      >
         <defs>
           <linearGradient id="halfStar" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="60%" style={{ stopColor: 'hsl(var(--primary))', stopOpacity: 1 }} />
-            <stop offset="60%" style={{ stopColor: 'transparent', stopOpacity: 1 }} />
+            <stop offset="52%" style={{ stopColor: 'hsl(var(--primary))', stopOpacity: 1 }} />
+            <stop offset="52%" style={{ stopColor: 'transparent', stopOpacity: 1 }} />
           </linearGradient>
         </defs>
         <path
