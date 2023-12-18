@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const CounterSection = () => {
   return (
-    <section className="flex h-full w-full items-center justify-center overflow-hidden lg:p-8 relative">
+    <section className="relative flex h-full w-full items-center justify-center overflow-hidden lg:p-8">
       <Image
         src="/background-counter.svg"
         layout="fill"
@@ -13,8 +13,9 @@ const CounterSection = () => {
         quality={100}
         alt="Background"
         className="absolute z-0"
+        draggable={false}
       />
-      <div className="flex max-w-[1420px] flex-col-reverse items-center justify-between lg:flex-row z-10">
+      <div className="z-10 flex max-w-[1420px] flex-col-reverse items-center justify-between lg:flex-row">
         <div className="w-full p-4 lg:mb-0 lg:w-[40%]">
           <h2 className="my-6 text-[20px] font-bold text-heading md:text-[48px]">
             Every Review Matters
@@ -39,7 +40,7 @@ const CounterSection = () => {
               count="4,000+"
               label="Members"
               svg="people-ico.svg"
-              className="lg:mt-20 bg-[#FFD89E]"
+              className="bg-[#FFD89E] lg:mt-20"
             />
             <CounterCard count="300+" label="Reviews" svg="star-ico.svg" className="bg-[#78A3B1]" />
             <CounterCard
@@ -52,7 +53,7 @@ const CounterSection = () => {
               count="10,000+"
               label="Unique Visitors"
               svg="chart-ico.svg"
-              className="lg:-mt-20 bg-[#80B2FF]"
+              className="bg-[#80B2FF] lg:-mt-20"
             />
           </div>
         </div>

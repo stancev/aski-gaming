@@ -1,9 +1,10 @@
 'use client';
 import CompanyCardStatic from '@/components/CompanyCardStatic';
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 import Image from 'next/image';
 
 const Slider = () => {
+  const [isInteracted, setIsInteracted] = useState(false);
   const scrollContainerRef = React.useRef(null) as MutableRefObject<HTMLDivElement | null>;
 
   const handleIconClick = (direction: 'left' | 'right') => {
@@ -19,7 +20,11 @@ const Slider = () => {
 
   return (
     <div className="relative flex max-w-[1430px] overflow-x-hidden">
-      <div className="mr-1 hidden min-w-[60px] flex-col items-center justify-center sm:flex">
+      <div
+        className={`mr-[-50px] min-w-[60px] flex-col items-center justify-center ${
+          isInteracted ? 'xs: hidden sm:hidden lg:flex' : 'hidden'
+        }`}
+      >
         <Image
           src="/icons/scroll-icon.svg"
           alt="slider"
@@ -40,14 +45,17 @@ const Slider = () => {
         <CompanyCardStatic />
         <CompanyCardStatic />
       </div>
-      <div className="ml-1 hidden min-w-[60px] flex-col items-center justify-center sm:flex">
+      <div className="ml-[-50px] hidden min-w-[60px] flex-col items-center justify-center lg:flex">
         <Image
           src="/icons/scroll-icon.svg"
           alt="slider"
           width={60}
           height={60}
           className="cursor-pointer"
-          onClick={() => handleIconClick('right')}
+          onClick={() => {
+            handleIconClick('right');
+            setIsInteracted(true);
+          }}
         />
       </div>
     </div>
