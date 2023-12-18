@@ -8,11 +8,10 @@ const CounterSection = () => {
     <section className="relative flex h-full w-full items-center justify-center overflow-hidden lg:p-8">
       <Image
         src="/background-counter.svg"
-        layout="fill"
-        objectFit="cover"
+        fill
         quality={100}
         alt="Background"
-        className="absolute z-0"
+        className="absolute z-0 object-cover"
         draggable={false}
       />
       <div className="z-10 flex max-w-[1420px] flex-col-reverse items-center justify-between lg:flex-row">
