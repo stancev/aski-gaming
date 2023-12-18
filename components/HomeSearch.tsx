@@ -26,13 +26,13 @@ const HomeSearch: React.FC<Props> = ({ searchActive }) => {
   return (
     <section
       className={cn(
-        'w-full max-w-[1424px] xl:mb-10 flex justify-center items-center',
+        'flex w-full max-w-[1424px] items-center justify-center xl:mb-10',
         !searchActive && 'hidden'
       )}
     >
-      <div className="relative xl:w-[636px] xl:h-[64px] rounded-[10px]">
+      <div className="relative rounded-[10px] xl:h-[64px] xl:w-[636px]">
         <Input
-          className="pl-24 pr-10 py-2 xl:w-full xl:h-full w-86 h-12 xl:text-[16px]"
+          className="w-86 h-12 py-2 pl-24 pr-10 xl:h-full xl:w-full xl:text-[16px]"
           placeholder="Search companies"
           type="text"
           name="search"
@@ -40,7 +40,7 @@ const HomeSearch: React.FC<Props> = ({ searchActive }) => {
           value={searchValue || ''}
           onChange={e => setSearchValue(e.target.value)}
         />
-        <div className="grid place-items-center absolute left-3 top-1/2 transform -translate-y-1/2 xl:h-12 xl:w-12 bg-primary rounded-[7px] h-9 w-9">
+        <div className="absolute left-3 top-1/2 grid h-9 w-9 -translate-y-1/2 transform place-items-center rounded-[7px] bg-primary xl:h-12 xl:w-12">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="22"
@@ -60,7 +60,7 @@ const HomeSearch: React.FC<Props> = ({ searchActive }) => {
         </div>
         {searchValue && (
           <button
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400"
+            className="absolute right-3 top-1/2 h-6 w-6 -translate-y-1/2 transform text-gray-400"
             onClick={handleClick}
           >
             <Image alt="cancel search" src="/cancel.svg" width={24} height={24} />

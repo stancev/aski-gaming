@@ -6,11 +6,10 @@ const HeroSection = () => {
     <section className="relative flex h-full w-full items-center justify-center overflow-hidden">
       <Image
         src="/background-hero.svg"
-        layout="fill"
-        objectFit="cover"
+        fill
         quality={100}
         alt="Background"
-        className="z-0"
+        className="z-0 object-cover"
         draggable={false}
       />
       <div className="z-10 flex w-full flex-col xl:max-w-[1440px] xl:flex-row">
@@ -33,8 +32,7 @@ const HeroSection = () => {
             <Image
               src="/askigaming-hero-section.webp"
               alt="Hero Section"
-              className="xl:h-full xl:w-auto"
-              objectFit="cover"
+              className="object-cover xl:h-full xl:w-auto"
               width={393}
               height={626}
               draggable={false}

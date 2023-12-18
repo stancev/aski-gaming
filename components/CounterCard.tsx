@@ -11,14 +11,14 @@ interface CounterCardProps {
 const CounterCard = ({ count, label, svg, className }: CounterCardProps) => {
   return (
     <div
-      className={`max-h-[306px] min-h-[161px] w-[300px] flex-col items-start rounded-[40.853px] inline-block flex-none py-12 pl-8 pr-20 ${className}`}
+      className={`inline-block max-h-[306px] min-h-[161px] w-[300px] flex-none flex-col items-start rounded-[40.853px] py-12 pl-8 pr-20 ${className}`}
     >
       <Image
         src={`/icons/${svg}`}
         alt="Counter Image"
         width={101}
-        height={101}
-        className="mt-1.5 aspect-[0.96] max-w-full overflow-hidden object-contain object-center"
+        height={106}
+        className="mt-1.5 aspect-[0.96] h-auto w-auto overflow-hidden"
       />
       <div className="mb-5 whitespace-nowrap text-5xl font-semibold leading-[65px] text-violet-950">
         {count}

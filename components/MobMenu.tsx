@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogClose,
   DialogHeader,
   DialogTrigger
@@ -22,30 +21,28 @@ export default function DialogDemo() {
               <Image src="/askigaming-logo.svg" alt="AskIgaming Logo" width={166} height={31} />
             </Link>
           </DialogClose>
-          <DialogDescription>
-            <div className="flex flex-col items-start lg:hidden">
-              <DialogClose asChild>
-                <Link href="/companies" className="py-2 text-base leading-10">
-                  Companies
-                </Link>
-              </DialogClose>
-              <DialogClose asChild>
-                <Link href="/categories" className="py-2 text-base leading-10">
-                  Categories
-                </Link>
-              </DialogClose>
-              <DialogClose asChild>
-                <Link href="/reviews" className="py-2 text-base leading-10">
-                  Reviews
-                </Link>
-              </DialogClose>
-              <DialogClose asChild>
-                <Link href="/reviews" className="py-2 text-base leading-10">
-                  Sign Up
-                </Link>
-              </DialogClose>
-            </div>
-          </DialogDescription>
+          <div className="flex flex-col items-start lg:hidden">
+            <DialogClose asChild>
+              <Link href="/companies" className="py-2 text-base leading-10">
+                Companies
+              </Link>
+            </DialogClose>
+            <DialogClose asChild>
+              <Link href="/categories" className="py-2 text-base leading-10">
+                Categories
+              </Link>
+            </DialogClose>
+            <DialogClose asChild>
+              <Link href="/reviews" className="py-2 text-base leading-10">
+                Reviews
+              </Link>
+            </DialogClose>
+            <DialogClose asChild>
+              <Link href="/reviews" className="py-2 text-base leading-10">
+                Sign Up
+              </Link>
+            </DialogClose>
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>
