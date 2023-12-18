@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google';
 import Provider from '@/components/Provider';
 import Header from '@/components/Header';
 import './globals.css';
+import Footer from '@/components/Footer';
 
 const poppins = Poppins({ weight: ['400', '500', '600'], subsets: ['latin'] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Provider>
           <Header />
           {children}
+          <Footer />
         </Provider>
       </body>
     </html>
