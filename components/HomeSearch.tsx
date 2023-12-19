@@ -32,7 +32,7 @@ const HomeSearch: React.FC<Props> = ({ searchActive }) => {
     >
       <div className="relative rounded-[10px] xl:h-[64px] xl:w-[636px]">
         <Input
-          className="w-86 h-12 py-2 pl-24 pr-10 xl:h-full xl:w-full xl:text-[16px]"
+          className="h-12 min-w-[200px] py-2 pl-24 pr-10 xl:h-full xl:w-full xl:text-[16px]"
           placeholder="Search companies"
           type="text"
           name="search"
