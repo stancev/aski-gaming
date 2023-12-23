@@ -42,6 +42,7 @@ const Footer = () => {
               alt="AskiGaming Instagram"
               width={32}
               height={32}
+              className="h-auto w-auto"
             />
           </Link>
           <Link href="https://facebook.com" target="_blank" rel="noreferrer">
@@ -51,6 +52,7 @@ const Footer = () => {
               alt="AskiGaming Facebook"
               width={32}
               height={32}
+              className="h-auto w-auto"
             />
           </Link>
           <Link href="https://linkedin.com" target="_blank" rel="noreferrer">
@@ -60,6 +62,7 @@ const Footer = () => {
               alt="AskiGaming LinkedIn"
               width={32}
               height={32}
+              className="h-auto w-auto"
             />
           </Link>
           <Link href="https://x.com" target="_blank" rel="noreferrer">
@@ -69,6 +72,7 @@ const Footer = () => {
               alt="AskiGaming Twitter"
               width={32}
               height={32}
+              className="h-auto w-auto"
             />
           </Link>
         </div>
