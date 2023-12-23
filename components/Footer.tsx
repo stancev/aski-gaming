@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="flex flex-col items-center ">
       <div className="sm: mt-5 flex w-full max-w-[1420px] flex-col items-start justify-between gap-5 p-8 md:flex-row md:p-16">
@@ -30,7 +32,7 @@ const Footer = () => {
       </div>
       <div className="flex w-full flex-col-reverse items-center justify-center bg-white p-5 sm:flex-row sm:justify-between">
         <p className="p-3 text-[11px] md:text-sm">
-          Copyright © AskiGaming 2024 | All rights reserved
+          Copyright © AskiGaming {currentYear} | All rights reserved
         </p>
         <div className="flex gap-3">
           <Link href="https://instagram.com" target="_blank" rel="noreferrer">

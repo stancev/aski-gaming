@@ -1,13 +1,15 @@
 import { getAllCompaniesIds, getCompanyData } from '@/lib/getData';
 import Breadcrumbs from './components/Breadcrumbs';
 import CompanyInfo from './components/CompanyInfo';
-import Certificates from './components/Certificates';
+import Categories from './components/Categories';
+import Achievements from './components/Achievements';
+import Scroller from '@/components/Scroller';
+import SimilarCompany from './components/SimilarCompany';
 
 interface Props {
   params: {
     id: string;
   };
-  resolvedUrl: string;
 }
 
 interface Company {
@@ -22,23 +24,38 @@ export async function generateStaticParams() {
   }));
 }
 
-const CompanyPage: React.FC<Props> = async ({ params, resolvedUrl }) => {
+const CompanyPage: React.FC<Props> = async ({ params }) => {
   const company = await getCompanyData(params.id);
-  console.log(resolvedUrl);
+
   return (
-    <main className="grid gap-4 p-10 md:grid-cols-5 2xl:p-16">
-      <div className="md:col-span-4">
+    <main className="mx-auto grid max-w-[1424px] grid-cols-1 gap-4 p-2 xl:grid-cols-8 xl:px-2 xl:py-16 2xl:px-0">
+      <div className="xl:col-span-6">
         <Breadcrumbs name={company.name} />
-        <article className="mt-2 w-full rounded-md bg-white p-12">
+        <article className="mt-2 w-full rounded-md bg-white p-4 xl:p-12">
           <CompanyInfo company={company} />
-          <Certificates name="Certificates" certificates={company.certificates} />
-          <Certificates name="Licences" certificates={company.licences} />
-          <Certificates name="Awards" certificates={company.awards} />
+
+          <Scroller name="Categories">
+            <Categories data={company.categories} />
+          </Scroller>
+
+          <Scroller name="Certificates">
+            <Achievements data={company.certificates} />
+          </Scroller>
+
+          <Scroller name="Licences">
+            <Achievements data={company.licences} />
+          </Scroller>
+
+          <Scroller name="Awards">
+            <Achievements data={company.awards} />
+          </Scroller>
         </article>
       </div>
-      <div className="md:col-span-1">
-        <h2 className="">Similar Companies</h2>
-        <div className="h-screen w-full bg-white">Hello</div>
+      <div className="xl:col-span-2">
+        <h2 className="mb-2">Similar Companies</h2>
+        {Array.from({ length: 9 }).map((_, index) => (
+          <SimilarCompany key={index} />
+        ))}
       </div>
     </main>
   );
