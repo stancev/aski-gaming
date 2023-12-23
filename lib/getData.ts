@@ -37,3 +37,19 @@ export async function getData(searchParams: SearchParams) {
   //return res.json();
   return { data, pagination };
 }
+
+export async function getAllCompaniesIds() {
+  const res = await fetch(`${process.env.API_URL}/companies?fields[0]=id&pagination[limit]=2000`);
+  const data = await res.json();
+  const companies = data.data;
+  return companies;
+}
+
+export async function getCompanyData(id: string) {
+  const res = await fetch(`${process.env.API_URL}/companies/${id}?populate=*`, {
+    next: { revalidate: 60 }
+  });
+  const data = await res.json();
+  const company = data.data;
+  return company;
+}
