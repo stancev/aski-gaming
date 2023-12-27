@@ -40,3 +40,5 @@ export interface Pagination {
   pageCount: number;
   total: number;
 }
+
+export type SearchParams = { [key: string]: string };

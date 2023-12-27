@@ -17,7 +17,9 @@ const Header = () => {
             <Separator className="h-[34px]" orientation="vertical" />
             <Link href="/reviews">Sign Up</Link>
           </div>
-          <Button className="h-8 w-[90px] md:h-12 md:w-[157px]">Login</Button>
+          <Button asChild className="h-8 w-[90px] md:h-12 md:w-[157px]">
+            <Link href="/signin">Login</Link>
+          </Button>
         </div>
         <div className="ml-2 flex justify-center lg:hidden">
           <MobMenu />

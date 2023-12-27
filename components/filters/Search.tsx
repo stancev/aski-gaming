@@ -30,22 +30,24 @@ const Search = () => {
       return;
     }
 
-    if (!debouncedSearchValue) {
-      router.push(`${pathname}?search=`);
-    } else {
+    if (debouncedSearchValue) {
       router.push(`${pathname}?search=${debouncedSearchValue}`);
     }
-  }, [debouncedSearchValue, router, pathname]);
+    if (searchValue === '') {
+      router.push(pathname);
+    }
+  }, [debouncedSearchValue, router, pathname, searchValue]);
 
   const handleCloseSearch = () => {
+    setSearchValue('');
     router.push(pathname);
   };
 
   return (
-    <section className="w-full max-w-[1424px] mb-10 flex justify-center items-center">
-      <div className="relative sm:w-[600px] xl:w-[636px] rounded-[10px] h-14 md:h-16">
+    <section className="mb-10 flex max-w-[1424px] items-center justify-center">
+      <div className="relative h-14 w-[345px] rounded-[10px] sm:w-[600px] md:h-16 xl:w-[636px]">
         <Input
-          className="pl-16 sm:pl-24 pr-10 py-2 w-full h-full"
+          className="h-full w-full py-2 pl-16 pr-10 sm:pl-24"
           placeholder="Enter company name"
           type="text"
           name="search"
@@ -53,11 +55,11 @@ const Search = () => {
           value={searchValue || ''}
           onChange={e => setSearchValue(e.target.value)}
         />
-        <div className="grid place-items-center absolute left-3 top-1/2 transform -translate-y-1/2 h-10 w-10 sm:h-12 sm:w-12 bg-primary rounded-[7px]">
+        <div className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 transform place-items-center rounded-[7px] bg-primary sm:h-12 sm:w-12">
           <Image alt="search-icon" src="/search.svg" width={22} height={22} />
         </div>
         <button
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400"
+          className="absolute right-3 top-1/2 h-6 w-6 -translate-y-1/2 transform text-gray-400"
           onClick={handleCloseSearch}
         >
           <Image alt="cancel search" src="/cancel.svg" width={24} height={24} />
