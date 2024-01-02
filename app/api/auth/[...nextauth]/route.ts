@@ -17,7 +17,7 @@ export const authOptions = {
       },
       authorize: async (credentials: any) => {
         if (credentials.google) {
-          const googleUser = credentials.google;
+          //const googleUser = credentials.google;
         }
         try {
           const { data } = await axios.post(`${process.env.API_URL}/auth/local`, {

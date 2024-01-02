@@ -1,15 +1,19 @@
 import { Suspense } from 'react';
 import { SearchParams } from '@/types/companies';
+import { getCategoryFull } from '@/lib/categories';
 import Headings from '@/components/pagers/Headings';
 import Search from '@/components/filters/Search';
 import CategoriesList from './CategoriesList';
 import Skeleton from '@/components/Skeleton';
+import Pagination from '@/components/Pagination';
 
 interface Props {
   searchParams: SearchParams;
 }
 
 const Categories: React.FC<Props> = async ({ searchParams }) => {
+  const { pagination } = await getCategoryFull(searchParams);
+
   return (
     <main className="flex min-h-screen flex-col items-center bg-[#F6F8FC] p-2 xl:p-16">
       <Headings
@@ -23,6 +27,8 @@ const Categories: React.FC<Props> = async ({ searchParams }) => {
           <CategoriesList searchParams={searchParams} />
         </Suspense>
       </section>
+
+      <Pagination pathname="/companies" pagination={pagination} searchParams={searchParams} />
     </main>
   );
 };

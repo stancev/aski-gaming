@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Props {
   category: any;
@@ -73,7 +74,7 @@ const CompanyCard: React.FC<Props> = ({ category }) => {
       </div>
       <div className="mt-3.5 flex h-px shrink-0 flex-col self-stretch bg-zinc-200" />
       <div className="mt-3.5 self-center whitespace-nowrap text-sm font-semibold leading-6 text-primary">
-        View more
+        <Link href={`/categories/${category.id}`}>View all companies</Link>
       </div>
     </div>
   );

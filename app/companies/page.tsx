@@ -11,7 +11,7 @@ import Skeleton from '@/components/Skeleton';
 const CompaniesPage = async ({ searchParams }: { searchParams: SearchParams }) => {
   const { pagination } = await getData(searchParams);
   const categories = await getCategories();
-  const isSearchOpen = searchParams.hasOwnProperty('search');
+  const isSearchOpen = searchParams.hasOwnProperty('searchOpen');
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-[#F6F8FC] p-2 xl:p-16">

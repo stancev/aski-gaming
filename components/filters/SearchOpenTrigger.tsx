@@ -12,7 +12,7 @@ const SearchOpenTrigger = () => {
       size="square"
       variant="default"
       className="ml-auto xl:ms-3"
-      onClick={() => router.push(pathname + '?' + 'search=')}
+      onClick={() => router.push(pathname + '?' + 'searchOpen=true')}
     >
       <Image alt="search-icon" src="/search.svg" width={22} height={22} />
     </Button>
