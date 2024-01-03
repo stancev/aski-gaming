@@ -1,6 +1,5 @@
 import Headings from '@/components/pagers/Headings';
 import FiltersContainer from './FiltersContainer';
-//import CompanyCard from '@/components/CompanyCardStatic';
 import CompanyList from '@/components/CompanyList';
 import { getData } from '@/lib/getData';
 import Skeleton from '@/components/Skeleton';
@@ -14,7 +13,7 @@ interface Props {
   searchParams: any;
 }
 
-const page: React.FC<Props> = async ({ params, searchParams }) => {
+const page: React.FC<Props> = async ({ params }) => {
   const { pagination } = await getData({ category: params.id });
 
   return (
