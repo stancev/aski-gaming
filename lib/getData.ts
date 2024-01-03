@@ -63,6 +63,5 @@ export async function getMe(token: string) {
 
   const data = await res.json();
 
-  console.log('test', data);
   return data;
 }

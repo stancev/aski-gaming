@@ -19,14 +19,14 @@ const Header = async () => {
             <Link href="/categories">Categories</Link>
             <Link href="/reviews">Reviews</Link>
             <Separator className="h-[34px]" orientation="vertical" />
-            {!session && <Link href="/reviews">Sign Up</Link>}
+            {!session && <Link href="/signup">Sign Up</Link>}
           </div>
           {!session ? (
             <Button asChild className="h-8 w-[90px] md:h-12 md:w-[157px]">
               <Link href="/signin">Login</Link>
             </Button>
           ) : (
-            <p>{session?.user?.name}</p>
+            <Link href="/account">{session?.user?.name}</Link>
           )}
         </div>
         <div className="ml-2 flex justify-center lg:hidden">

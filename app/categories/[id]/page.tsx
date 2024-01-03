@@ -16,7 +16,7 @@ interface Props {
 
 const page: React.FC<Props> = async ({ params, searchParams }) => {
   const { pagination } = await getData({ category: params.id });
-  console.log('test', { ...searchParams, category: params.id });
+
   return (
     <main className="flex min-h-screen flex-col items-center bg-[#F6F8FC] p-2 xl:p-16">
       <Headings
