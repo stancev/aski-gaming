@@ -6,7 +6,7 @@ import MobMenu from '@/components/MobMenu';
 
 const Header = () => {
   return (
-    <nav className="h-22 mb-26 flex justify-center bg-white px-4 py-3">
+    <nav className="h-22 mb-26 sticky top-0 z-50 flex justify-center bg-white px-4 py-3">
       <section className="flex w-full max-w-[1424px] items-center">
         <AskiLogo />
         <div className="ml-auto flex items-center space-x-6">
