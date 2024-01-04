@@ -8,14 +8,21 @@ import { Input } from '@/components/ui/input';
 
 const Search = () => {
   const searchParams = useSearchParams();
+  const hasSearch = searchParams.has('search');
   const search = searchParams.get('search');
   const router = useRouter();
   const pathname = usePathname();
   const initialRender = useRef(true);
 
-  const [searchValue, setSearchValue] = useState(search ? search : '');
+  const [searchValue, setSearchValue] = useState(hasSearch ? search : '');
 
   const [debouncedSearchValue] = useDebounce(searchValue, 250);
+
+  useEffect(() => {
+    if (search !== debouncedSearchValue && debouncedSearchValue) {
+      router.push(`${pathname}?search=${debouncedSearchValue}`);
+    }
+  }, [search, debouncedSearchValue, router, pathname]);
 
   useEffect(() => {
     if (initialRender.current) {
@@ -23,18 +30,13 @@ const Search = () => {
       return;
     }
 
-    if (!debouncedSearchValue && pathname !== '/companies') {
+    if (debouncedSearchValue) {
+      router.push(`${pathname}?search=${debouncedSearchValue}`);
+    }
+    if (searchValue === '') {
       router.push(pathname);
-      return;
     }
-
-    if (pathname === '/companies') {
-      router.push(`${pathname}?searchOpen=true&search=${debouncedSearchValue}`);
-      return;
-    }
-
-    router.push(`${pathname}?search=${debouncedSearchValue}`);
-  }, [debouncedSearchValue, router, pathname]);
+  }, [debouncedSearchValue, router, pathname, searchValue]);
 
   const handleCloseSearch = () => {
     setSearchValue('');
@@ -42,8 +44,8 @@ const Search = () => {
   };
 
   return (
-    <section className="mb-10 flex w-full max-w-[1424px] items-center justify-center">
-      <div className="relative h-14 rounded-[10px] sm:w-[600px] md:h-16 xl:w-[636px]">
+    <section className="mb-10 flex max-w-[1424px] items-center justify-center">
+      <div className="relative h-14 w-[345px] rounded-[10px] sm:w-[600px] md:h-16 xl:w-[636px]">
         <Input
           className="h-full w-full py-2 pl-16 pr-10 sm:pl-24"
           placeholder="Enter company name"

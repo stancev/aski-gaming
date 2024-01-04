@@ -13,7 +13,7 @@ export async function getData(searchParams: SearchParams) {
 
   const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
 
-  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=6&populate=*`;
+  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=2&populate=*`;
 
   if (updatedStrapiQuery) {
     url += updatedStrapiQuery;
@@ -52,4 +52,16 @@ export async function getCompanyData(id: string) {
   const data = await res.json();
   const company = data.data;
   return company;
+}
+
+export async function getMe(token: string) {
+  const res = await fetch(`${process.env.API_URL}/users/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  const data = await res.json();
+
+  return data;
 }
