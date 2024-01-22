@@ -4,7 +4,7 @@ export async function POST(req: any, res: any) {
   if (req.method === 'POST') {
     try {
       const { username, email, password } = req.body;
-      const check = await req.json();
+      //const check = await req.json();
       //console.log('req.body', check.body);
       // Call a function to handle registration with Strapi
       const strapiResponse = await registerUserWithStrapi(username, email, password);
