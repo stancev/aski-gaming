@@ -4,10 +4,11 @@ import CompaniesSection from '@/components/homepage-sections/CompaniesSection';
 import ReviewsSection from '@/components/homepage-sections/ReviewsSection';
 import CounterSection from '@/components/homepage-sections/CounterSection';
 import MapSection from '@/components/homepage-sections/MapSection';
+
 export default function Home() {
   return (
     <main>
-      <HeroSection />
+      <HeroSection searchParams={{}} />
       <CompaniesSection />
       <ReviewsSection />
       <AboutSection />

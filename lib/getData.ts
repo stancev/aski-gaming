@@ -13,7 +13,7 @@ export async function getData(searchParams: SearchParams) {
 
   const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
 
-  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&pagination[pageSize]=2&populate=*`;
+  let url = `${process.env.API_URL}/companies?pagination[page]=${page}&populate=*`;
 
   if (updatedStrapiQuery) {
     url += updatedStrapiQuery;
@@ -36,6 +36,54 @@ export async function getData(searchParams: SearchParams) {
 
   //return res.json();
   return { data, pagination };
+}
+
+export async function getReviewData(searchParams: SearchParams) {
+  const page = searchParams.page || 1;
+
+  const strapiQuery: Record<string, string> = {
+    // Add or modify the parameters as needed for fetching reviews
+    rating: 'filters[rating][$eq]=${rating}',
+    company: 'filters[company][id][$eq]=${company}'
+  };
+
+  const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
+
+  // Update the URL to point to the reviews endpoint
+  let url = `${process.env.API_URL}/reviews?pagination[page]=${page}&populate=user,company.logo.url,user.profilePicture.url`;
+
+  if (updatedStrapiQuery) {
+    url += updatedStrapiQuery;
+  }
+
+  // Fetch the data from the API
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data');
+  }
+
+  const {
+    data,
+    meta: { pagination }
+  } = await res.json();
+
+  return { data, pagination };
+}
+
+export async function getRecentReviews() {
+  const url = `${process.env.API_URL}/reviews?sort=publishedAt:desc&pagination[limit]=6&populate=user,company.logo.url,user.profilePicture.url`;
+
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const { data } = await res.json();
+
+  return data;
 }
 
 export async function getAllCompaniesIds() {

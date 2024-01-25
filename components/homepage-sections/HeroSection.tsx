@@ -1,7 +1,11 @@
 import HomeSearch from '@/components/HomeSearch';
 import Image from 'next/image';
+import { getData } from '@/lib/getData';
+import { SearchParams } from '@/types/companies';
 
-const HeroSection = () => {
+const HeroSection = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const companies = await getData(searchParams);
+
   return (
     <section className="relative flex h-full w-full items-center justify-center overflow-hidden">
       <Image
@@ -22,7 +26,7 @@ const HeroSection = () => {
           </p>
 
           <div className="mt-4 w-full xl:mt-6 xl:w-[636px]">
-            <HomeSearch searchActive={true} />
+            <HomeSearch companies={companies.data} />
           </div>
         </div>
 

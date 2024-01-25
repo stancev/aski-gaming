@@ -1,44 +1,34 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import { Input } from '@/components/ui/input';
-
+import { CommandMenu } from '@/components/CommandMenu';
 interface Props {
+  companies: any[];
   search?: string;
-  searchActive?: boolean;
 }
 
-const HomeSearch: React.FC<Props> = ({ searchActive }) => {
-  const searchParams = useSearchParams();
-  const hasSearch = searchParams.has('search');
-  const search = searchParams.get('search');
+const HomeSearch: React.FC<Props> = ({ companies }) => {
+  const [isCommandMenuOpen, setCommandMenuOpen] = useState(false);
 
   //const urlSearchValue = searchParams.get('search');
-  const [searchValue, setSearchValue] = useState(hasSearch ? search : '');
 
   const handleClick = () => {
-    setSearchValue('');
+    setCommandMenuOpen(true);
   };
 
   return (
     <section
-      className={cn(
-        'flex w-full max-w-[1424px] items-center justify-center xl:mb-10',
-        !searchActive && 'hidden'
-      )}
+      className={cn('relative flex w-full max-w-[1424px] items-center justify-center xl:mb-10')}
     >
-      <div className="relative rounded-[10px] xl:h-[64px] xl:w-[636px]">
+      <div onClick={handleClick} className="relative rounded-[10px] xl:h-[64px] xl:w-[636px]">
         <Input
           className="h-12 min-w-[200px] py-2 pl-24 pr-10 xl:h-full xl:w-full xl:text-[16px]"
           placeholder="Search companies"
           type="text"
           name="search"
           id="search"
-          value={searchValue || ''}
-          onChange={e => setSearchValue(e.target.value)}
         />
         <div className="absolute left-3 top-1/2 grid h-9 w-9 -translate-y-1/2 transform place-items-center rounded-[7px] bg-primary xl:h-12 xl:w-12">
           <svg
@@ -58,15 +48,12 @@ const HomeSearch: React.FC<Props> = ({ searchActive }) => {
             />
           </svg>
         </div>
-        {searchValue && (
-          <button
-            className="absolute right-3 top-1/2 h-6 w-6 -translate-y-1/2 transform text-gray-400"
-            onClick={handleClick}
-          >
-            <Image alt="cancel search" src="/cancel.svg" width={24} height={24} />
-          </button>
-        )}
       </div>
+      <CommandMenu
+        companies={companies}
+        open={isCommandMenuOpen}
+        onOpenChange={setCommandMenuOpen}
+      />
     </section>
   );
 };

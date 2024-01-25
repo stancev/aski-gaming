@@ -28,7 +28,7 @@ const CounterSection = () => {
             guide decisions in an ever-evolving industry.
           </p>
           <div className="flex w-full">
-            <Link href="/companies" className="mx-auto mt-10 w-full sm:w-[187px] lg:mx-0">
+            <Link href="/reviews" className="mx-auto mt-10 w-full sm:w-[187px] lg:mx-0">
               <Button className="mx-auto w-full sm:w-[187px] lg:mx-0">View all reviews</Button>
             </Link>
           </div>
