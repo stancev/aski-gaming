@@ -65,7 +65,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
         </Avatar>
         <div className="flex flex-col justify-center">
           <div className="flex items-center justify-start">
-            <Link href="/reviews">
+            <Link href={`/profiles/${review.user.id}`}>
               <h4 className="mr-3 text-base font-semibold capitalize text-heading xl:text-xl">
                 {review.user.username}
               </h4>

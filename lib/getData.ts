@@ -50,7 +50,7 @@ export async function getReviewData(searchParams: SearchParams) {
   const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
 
   // Update the URL to point to the reviews endpoint
-  let url = `${process.env.API_URL}/reviews?pagination[page]=${page}&populate=user,company.logo.url,user.profilePicture.url`;
+  let url = `${process.env.API_URL}/reviews?pagination[page]=${page}&populate=user,company.logo.url,user.profilePicture.url&pagination[pageSize]=6`;
 
   if (updatedStrapiQuery) {
     url += updatedStrapiQuery;
@@ -100,6 +100,17 @@ export async function getCompanyData(id: string) {
   const data = await res.json();
   const company = data.data;
   return company;
+}
+
+export async function getProfileData(id: string) {
+  const res = await fetch(
+    `${process.env.API_URL}/users/${id}?sort=createdAt:desc&pagination[limit]=6&populate[reviews][populate][0]=company.logo.url&populate=profilePicture`,
+    {
+      next: { revalidate: 60 }
+    }
+  );
+  const user = await res.json();
+  return user;
 }
 
 export async function getMe(token: string) {
