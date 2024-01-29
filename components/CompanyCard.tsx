@@ -11,13 +11,14 @@ const CompanyCard = ({ company }: { company: Company }) => {
   return (
     <Link href={`/companies/${company.id}`} passHref>
       <Card className="w-304 h-178 p-3 sm:p-4 lg:rounded-md 2xl:h-253 2xl:w-464">
-        <div className="flex flex-row border-b border-gray-300 pb-4">
+        <div className="flex min-h-[109px] flex-row border-b border-gray-300 pb-4">
           <Image
             className="mr-3 rounded-sm"
             alt={`${company.name} logo`}
             src={`${process.env.STRAPI_URL}${company.logo.url}`}
             width={92}
             height={92}
+            style={{ objectFit: 'contain' }}
           />
           <div className="mt-0 flex flex-grow flex-col justify-between space-y-0 pt-0">
             <div className="flex justify-between">

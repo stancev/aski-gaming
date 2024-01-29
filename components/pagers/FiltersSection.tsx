@@ -13,26 +13,26 @@ interface Props {
 
 const FiltersSection: React.FC<Props> = ({ categories, isSearchOpen }) => {
   return (
-    <section className="w-full max-w-[1424px] h-16 mb-10 flex flex-col items-center">
-      <div className={cn('w-full flex', isSearchOpen && 'hidden')}>
+    <section className="mb-10 flex h-16 w-full max-w-[1424px] flex-col items-center">
+      <div className={cn('flex w-full', isSearchOpen && 'hidden')}>
         <div className="flex space-x-1 xl:space-x-6">
           <CategoriesFilter categories={categories} />
           <SortBy />
         </div>
-        <div className="hidden lg:flex space-x-1 xl:space-x-3 ml-auto">
+        <div className="ml-auto hidden space-x-1 lg:flex xl:space-x-3">
           <ButtonFilters />
         </div>
         <SearchOpenTrigger />
       </div>
       <div
         className={cn(
-          'lg:hidden flex justify-between w-full space-x-1 xl:space-x-6 mt-4',
+          'mt-4 flex w-full justify-between space-x-1 lg:hidden xl:space-x-6',
           isSearchOpen && 'hidden'
         )}
       >
         <ButtonFilters />
       </div>
-      {isSearchOpen && <Search />}
+      {isSearchOpen && <Search placeholder="Enter company name" />}
     </section>
   );
 };

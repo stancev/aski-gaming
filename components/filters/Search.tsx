@@ -6,7 +6,11 @@ import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 
-const Search = () => {
+interface SearchProps {
+  placeholder: string;
+}
+
+const Search: React.FC<SearchProps> = ({ placeholder }) => {
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
   const router = useRouter();
@@ -46,7 +50,7 @@ const Search = () => {
       <div className="relative h-14 rounded-[10px] sm:w-[600px] md:h-16 xl:w-[636px]">
         <Input
           className="h-full w-full py-2 pl-16 pr-10 sm:pl-24"
-          placeholder="Enter company name"
+          placeholder={placeholder}
           type="text"
           name="search"
           id="search"
