@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-//import { signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 //import GoogleSignInButton from '@/components/GoogleSignInButton';
 import { Input } from '@/components/ui/input';
@@ -27,6 +27,14 @@ const SignInPage = () => {
 
     const data = await response.json();
     console.log(data);
+
+    if (data.user) {
+      signIn('credentials', {
+        identifier: email,
+        password: password,
+        callbackUrl: `http://localhost:3000/`
+      });
+    }
   };
 
   return (

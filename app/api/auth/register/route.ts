@@ -1,27 +1,17 @@
-import { signIn } from 'next-auth/react';
+import { NextResponse } from 'next/server';
 
-export async function POST(req: any, res: any) {
-  if (req.method === 'POST') {
-    try {
-      const { username, email, password } = req.body;
-      const check = await req.json();
-      //console.log('req.body', check.body);
-      // Call a function to handle registration with Strapi
-      const strapiResponse = await registerUserWithStrapi(username, email, password);
-      //console.log('strapiResponse', strapiResponse.error.details.errors);
-      signIn('credentials', {
-        identifier: email,
-        password: password,
-        callbackUrl: `http://localhost:3000/`
-      });
+export async function POST(request: Request) {
+  const data = await request.json();
+  console.log('data', data);
 
-      res.status(200).json({ message: 'User registered successfully', data: strapiResponse });
-    } catch (error) {
-      res.status(500).json({ message: 'Error registering user', error });
-    }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+  try {
+    const { username, email, password } = data;
+
+    const strapiResponse = await registerUserWithStrapi(username, email, password);
+
+    return NextResponse.json(strapiResponse);
+  } catch (error) {
+    console.log(error);
   }
 }
 
