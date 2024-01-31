@@ -1,175 +1,144 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { cn, generatePages } from '@/lib/utils';
+import { Pagination } from '@/types/companies';
 import { Button } from '@/components/ui/button';
 
-const Pagination = ({ search, pagination }: any) => {
+type SearchParams = { [key: string]: string };
+interface Props {
+  pathname: string;
+  pagination: Pagination;
+  searchParams: SearchParams;
+}
+
+const Pagination: React.FC<Props> = ({ pathname, pagination, searchParams }) => {
+  const { page, pageCount } = pagination;
+  const pageNumbers = generatePages(page, pageCount);
+
   return (
     <section className="w-full max-w-[1424px] mt-10 flex justify-end items-center space-x-3">
       <Button asChild variant="outline" size="square">
-        <Link
-          href={{
-            pathname: '/companies',
-            query: {
-              page: 1,
-              search
-            }
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <g opacity="0.3">
-              <path
-                d="M11 6L5 12L11 18"
-                stroke="#80287B"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M19 6L13 12L19 18"
-                stroke="#80287B"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </g>
-          </svg>
-        </Link>
-      </Button>
-      <Button asChild variant="outline" size="square">
-        <Link
-          href={{
-            pathname: '/companies',
-            query: {
-              page: 1,
-              search
-            }
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              d="M15 6L9 12L15 18"
-              stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+        {page === 1 ? (
+          <div className={cn(page === 1 && 'opacity-30')}>
+            <Image
+              alt="left-chevron-double"
+              src="/left-chevron-double.svg"
+              width={24}
+              height={24}
             />
-          </svg>
-        </Link>
-      </Button>
-      <Button asChild variant="default" size="square">
-        <Link
-          href={{
-            pathname: '/companies',
-            query: {
-              page: 1,
-              search
-            }
-          }}
-        >
-          1
-        </Link>
-      </Button>
-      <Button asChild variant="outline" size="square" disabled={true}>
-        {true ? (
-          <div>2</div>
+          </div>
         ) : (
           <Link
             href={{
-              pathname: '/companies',
+              pathname: pathname,
               query: {
-                page: 2,
-                search
+                ...searchParams,
+                page: 1
               }
             }}
           >
-            2
+            <Image
+              alt="left-chevron-double"
+              src="/left-chevron-double.svg"
+              width={24}
+              height={24}
+            />
           </Link>
         )}
       </Button>
       <Button asChild variant="outline" size="square">
-        <Link
-          href={{
-            pathname: '/companies',
-            query: {
-              page: 3,
-              search
-            }
-          }}
-        >
-          3
-        </Link>
-      </Button>
-      <Button asChild variant="outline" size="square">
-        <Link
-          href={{
-            pathname: '/companies',
-            query: {
-              page: 3,
-              search
-            }
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
+        {page === 1 ? (
+          <div className={cn(page === 1 && 'opacity-30')}>
+            <Image alt="left-chevron" src="/left-chevron.svg" width={24} height={24} />
+          </div>
+        ) : (
+          <Link
+            href={{
+              pathname: pathname,
+              query: {
+                ...searchParams,
+                page: page - 1
+              }
+            }}
           >
-            <path
-              d="M9 17.9998L15 11.9998L9 5.99976"
-              stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </Link>
+            <Image alt="left-chevron" src="/left-chevron.svg" width={24} height={24} />
+          </Link>
+        )}
       </Button>
-      <Button asChild variant="outline" size="square">
-        <Link
-          href={{
-            pathname: '/companies',
-            query: {
-              page: 3,
-              search
-            }
-          }}
+
+      {pageNumbers.map((pageNumber: number) => (
+        <Button
+          key={pageNumber}
+          asChild
+          variant={pageNumber === page ? 'default' : 'outline'}
+          disabled={pageNumber === page}
+          size="square"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
+          {pageNumber === page ? (
+            <span>{pageNumber}</span>
+          ) : (
+            <Link
+              href={{
+                pathname: pathname,
+                query: {
+                  ...searchParams,
+                  page: pageNumber
+                }
+              }}
+            >
+              {pageNumber}
+            </Link>
+          )}
+        </Button>
+      ))}
+
+      <Button asChild variant="outline" size="square">
+        {page === pageCount ? (
+          <div className={cn(page === pageCount && 'opacity-30')}>
+            <Image alt="right-chevron-disabled" src="/right-chevron.svg" width={24} height={24} />
+          </div>
+        ) : (
+          <Link
+            href={{
+              pathname: pathname,
+              query: {
+                ...searchParams,
+                page: page + 1
+              }
+            }}
           >
-            <path
-              d="M13 18L19 12L13 6"
-              stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+            <Image alt="right-chevron" src="/right-chevron.svg" width={24} height={24} />
+          </Link>
+        )}
+      </Button>
+      <Button asChild variant="outline" size="square" disabled={page === pageCount}>
+        {page === pageCount ? (
+          <div className={cn(page === pageCount && 'opacity-30')}>
+            <Image
+              alt="right-chevron-double-disabled"
+              src="/right-chevron-double.svg"
+              width={24}
+              height={24}
             />
-            <path
-              d="M5 18L11 12L5 6"
-              stroke="#80287B"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+          </div>
+        ) : (
+          <Link
+            href={{
+              pathname: pathname,
+              query: {
+                ...searchParams,
+                page: pageCount
+              }
+            }}
+          >
+            <Image
+              alt="right-chevron-double"
+              src="/right-chevron-double.svg"
+              width={24}
+              height={24}
             />
-          </svg>
-        </Link>
+          </Link>
+        )}
       </Button>
     </section>
   );
