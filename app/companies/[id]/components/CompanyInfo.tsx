@@ -18,6 +18,7 @@ const CompanyInfo: React.FC<Props> = ({ company }) => {
             className="mr-5 rounded-md"
             alt={`${company.name} logo`}
             src={`${process.env.STRAPI_URL}${company.logo.url}`}
+            style={{ objectFit: 'contain' }}
           />
         </div>
         <div className="ms-4 mt-0 flex flex-grow flex-col justify-between space-y-0 pt-0">

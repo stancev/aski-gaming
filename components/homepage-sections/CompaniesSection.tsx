@@ -13,13 +13,14 @@ const CompaniesSection = () => {
         alt="Background"
         className="absolute z-0 object-cover"
         draggable={false}
+        style={{ width: '100%' }}
       />
       <div className="relative z-10 flex justify-center py-4 pl-4 pr-0 lg:py-8 lg:pr-8">
         <div className="mx-auto overflow-hidden text-left">
           <h2 className="z-10 mb-2 text-base font-semibold text-heading md:text-2xl">Featured</h2>
           <Slider />
           <div className="mt-2">
-            <Link href="/companies" className="font-semibold text-primary">
+            <Link href="/companies?featured=true" className="font-semibold text-primary">
               View all
             </Link>
           </div>
@@ -30,7 +31,7 @@ const CompaniesSection = () => {
           <h2 className="mb-2 text-base font-semibold text-heading md:text-2xl">Most Reviews</h2>
           <Slider />
           <div className="mt-2">
-            <Link href="/companies" className="font-semibold text-primary">
+            <Link href="/companies?sort=most-reviews" className="font-semibold text-primary">
               View all
             </Link>
           </div>
@@ -41,7 +42,7 @@ const CompaniesSection = () => {
           <h2 className="mb-2 text-base font-semibold text-heading md:text-2xl">New</h2>
           <Slider />
           <div className="mt-2">
-            <Link href="/companies" className="font-semibold text-primary">
+            <Link href="/companies?sort=newest" className="font-semibold text-primary">
               View all
             </Link>
           </div>
