@@ -3,6 +3,7 @@ import Stars from '@/components/ui/stars';
 import { Separator } from '@/components/ui/separator';
 import { Company } from '@/types/companies';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface Props {
   company: Company;
@@ -75,7 +76,37 @@ const CompanyInfo: React.FC<Props> = ({ company }) => {
                   </PopoverContent>
                 </Popover>
               </div>
-              {company.claimed && <Image alt="claimed" src="/claimed.svg" width={24} height={24} />}
+              {company.claimed == true ? (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Image alt="claimed company icon" src="/claimed.svg" width={24} height={24} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>
+                        This company has been claimed. AskiGaming team verified the user running
+                        this company&apos;s profile.
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              ) : (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Image
+                        alt="unclaimed company icon"
+                        src="/unclaimed.svg"
+                        width={24}
+                        height={24}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>This company has not been claimed yet.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
             </div>
             <p className="mb-2 mt-0 text-sm">
               {company.country}, {company.city}

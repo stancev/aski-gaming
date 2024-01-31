@@ -8,7 +8,7 @@ import MapSection from '@/components/homepage-sections/MapSection';
 export default function Home() {
   return (
     <main>
-      <HeroSection searchParams={{}} />
+      <HeroSection />
       <CompaniesSection />
       <ReviewsSection />
       <AboutSection />

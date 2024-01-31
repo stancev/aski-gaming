@@ -6,6 +6,7 @@ import Link from 'next/link';
 //import { cn } from '@/lib/utils';
 import { Review } from '@/types/companies';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const ReviewCard = ({ review }: { review: Review }) => {
   return (
@@ -24,8 +25,8 @@ const ReviewCard = ({ review }: { review: Review }) => {
           <div className="flex flex-col justify-start">
             <p className="text-sm font-semibold text-heading xl:text-base">{review.company.name}</p>
             <div className="flex">
-              <p className="text-xs">4.0 / 32 reviews /</p>
-              <p className="text-xs font-semibold text-primary">+8</p>
+              <p className="text-xs">4.0 / 32 reviews </p>
+              {/* <p className="text-xs font-semibold text-primary">+8</p> */}
             </div>
             <div className="mt-1">
               <Stars />
@@ -48,40 +49,66 @@ const ReviewCard = ({ review }: { review: Review }) => {
         <ReviewerStars rating={review.rating} />
       </div>
       <div className="mt-4 h-px bg-zinc-200" />
-      <CardFooter className="mt-4 flex items-center p-0">
-        <Avatar className="mr-3 h-[54px] w-[54px]">
-          <AvatarImage
-            className="object-cover"
-            alt="reviewer avatar"
-            src={
-              review.user.profilePicture
-                ? `${process.env.STRAPI_URL}${review.user.profilePicture.url}`
-                : undefined
-            }
-          />
-          <AvatarFallback className="text-3xl">
-            {review.user.username.substring(0, 1)}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col justify-center">
-          <div className="flex items-center justify-start">
-            <Link href={`/profiles/${review.user.id}`}>
+      <Link href={`/profiles/${review.user.id}`}>
+        <CardFooter className="mt-4 flex items-center p-0">
+          <Avatar className="mr-3 h-[54px] w-[54px]">
+            <AvatarImage
+              className="object-cover"
+              alt="reviewer avatar"
+              src={
+                review.user.profilePicture
+                  ? `${process.env.STRAPI_URL}${review.user.profilePicture.url}`
+                  : undefined
+              }
+            />
+            <AvatarFallback className="text-3xl">
+              {review.user.username.substring(0, 1)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col justify-center">
+            <div className="flex items-center justify-start">
               <h4 className="mr-3 text-base font-semibold capitalize text-heading xl:text-xl">
                 {review.user.username}
               </h4>
-            </Link>
-            <Image
-              className="rounded-sm object-cover"
-              alt="claimed company icon"
-              src="/claimed.svg"
-              width={16}
-              height={16}
-            />
+              {review.user.confirmed == true ? (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Image
+                        alt="verified profile icon"
+                        src="/claimed.svg"
+                        width={16}
+                        height={16}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Verified User</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              ) : (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Image
+                        alt="unverified profile icon"
+                        src="/unclaimed.svg"
+                        width={18}
+                        height={18}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>User not verified</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+            </div>
+            <p className="text-xs xl:text-sm">{review.user.position}</p>
+            {/* <p className="text-xs xl:text-sm">3,200 Reviews</p> */}
           </div>
-          <p className="text-xs xl:text-sm">{review.user.position}</p>
-          <p className="text-xs xl:text-sm">3,200 Reviews</p>
-        </div>
-      </CardFooter>
+        </CardFooter>
+      </Link>
     </Card>
   );
 };

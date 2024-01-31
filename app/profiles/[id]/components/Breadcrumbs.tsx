@@ -5,7 +5,7 @@ const Breadcrumbs = ({ username }: { username: string }) => {
   return (
     <nav className="my-3 flex space-x-1 font-semibold text-white sm:my-0">
       <Link href="/reviews">Reviews</Link>
-      <Image alt="right-chevron" src="/right-chevron.svg" width={24} height={24} />
+      <Image alt="right-chevron" src="/chevron-down-white.svg" width={24} height={24} />
       <p>{username}</p>
     </nav>
   );

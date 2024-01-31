@@ -50,7 +50,7 @@ export async function getReviewData(searchParams: SearchParams) {
   const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
 
   // Update the URL to point to the reviews endpoint
-  let url = `${process.env.API_URL}/reviews?pagination[page]=${page}&populate=user,company.logo.url,user.profilePicture.url&pagination[pageSize]=6`;
+  let url = `${process.env.API_URL}/reviews?sort=publishedAt:desc&pagination[page]=${page}&populate=user,company.logo.url,user.profilePicture.url&pagination[pageSize]=9`;
 
   if (updatedStrapiQuery) {
     url += updatedStrapiQuery;
@@ -86,6 +86,37 @@ export async function getRecentReviews() {
   return data;
 }
 
+export async function getSingleCompanyReviewData(id: string, searchParams: SearchParams) {
+  const page = searchParams.page || 1;
+  const strapiQuery: Record<string, string> = {
+    // Add or modify the parameters as needed for fetching reviews
+    rating: 'filters[rating][$eq]=${rating}',
+    company: 'filters[company][id][$eq]=${company}'
+  };
+  const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
+
+  let url = `${process.env.API_URL}/reviews?populate=user.profilePicture.url,company&filters[company][id][$eq]=${id}&sort=publishedAt:desc&pagination[page]=${page}&pagination[pageSize]=5`;
+
+  if (updatedStrapiQuery) {
+    url += updatedStrapiQuery;
+  }
+
+  // Fetch the data from the API
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data');
+  }
+
+  const {
+    data,
+    meta: { pagination }
+  } = await res.json();
+
+  return { data, pagination };
+}
+
 export async function getAllCompaniesIds() {
   const res = await fetch(`${process.env.API_URL}/companies?fields[0]=id&pagination[limit]=2000`);
   const data = await res.json();
@@ -94,17 +125,33 @@ export async function getAllCompaniesIds() {
 }
 
 export async function getCompanyData(id: string) {
-  const res = await fetch(`${process.env.API_URL}/companies/${id}?populate=*`, {
-    next: { revalidate: 60 }
-  });
+  const res = await fetch(
+    `${process.env.API_URL}/companies/${id}?populate=reviews.user.profilePicture,logo,categories`,
+    {
+      next: { revalidate: 60 }
+    }
+  );
   const data = await res.json();
   const company = data.data;
   return company;
 }
 
+export async function getHomepageCompanies(type: 'featured' | 'new') {
+  let url = `${process.env.API_URL}/companies?populate=logo,categories&sort=publishedAt:desc&pagination[limit]=10`;
+
+  if (type === 'featured') {
+    url = `${process.env.API_URL}/companies?filters[featured][$eq]=true&populate=logo,categories&sort=publishedAt:desc&pagination[limit]=10`;
+  }
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data;
+}
+
 export async function getProfileData(id: string) {
   const res = await fetch(
-    `${process.env.API_URL}/users/${id}?sort=createdAt:desc&pagination[limit]=6&populate[reviews][populate][0]=company.logo.url&populate=profilePicture`,
+    `${process.env.API_URL}/users/${id}?sort=createdAt:desc&populate[reviews][populate][0]=company.logo.url&populate=profilePicture`,
     {
       next: { revalidate: 60 }
     }
@@ -122,5 +169,11 @@ export async function getMe(token: string) {
 
   const data = await res.json();
 
+  return data;
+}
+
+export async function getHomepageCounters() {
+  const res = await fetch(`${process.env.API_URL}/homepage-counter`);
+  const data = await res.json();
   return data;
 }

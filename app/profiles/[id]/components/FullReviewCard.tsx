@@ -9,7 +9,7 @@ import { Review } from '@/types/companies';
 const FullReviewCard = ({ review }: { review: Review }) => {
   return (
     <Card className="m-3 flex w-full max-w-[1074px] flex-col p-3 sm:p-4 lg:rounded-md">
-      <Link href={`/companies/${review.company.id}`} passHref>
+      <Link href={`/companies/${review.company.id}`}>
         <CardHeader className="flex-row items-center space-y-0 p-0">
           <div className="mr-3 mt-1">
             <Image

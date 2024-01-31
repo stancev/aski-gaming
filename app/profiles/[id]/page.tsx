@@ -2,17 +2,18 @@ import { getProfileData } from '@/lib/getData';
 import Image from 'next/image';
 import ProfileBox from './components/ProfileBox';
 import FullReviewCard from './components/FullReviewCard';
-import Pagination from '@/components/Pagination';
 import Breadcrumbs from './components/Breadcrumbs';
 
 interface Props {
   params: {
     id: string;
+    page: number;
   };
 }
 
 const ProfilePage: React.FC<Props> = async ({ params }) => {
   const profile = await getProfileData(params.id);
+
   return (
     <section>
       <div style={{ width: '100%', height: '200px', position: 'relative' }}>
@@ -47,7 +48,6 @@ const ProfilePage: React.FC<Props> = async ({ params }) => {
                 <FullReviewCard key={review.id} review={review} />
               ))}
             </div>
-            <Pagination pathname="/profiles" pagination={profile} searchParams={profile} />
           </article>
         </div>
       </div>

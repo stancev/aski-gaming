@@ -1,15 +1,19 @@
-import { getAllCompaniesIds, getCompanyData } from '@/lib/getData';
+import { getAllCompaniesIds, getCompanyData, getSingleCompanyReviewData } from '@/lib/getData';
 import Breadcrumbs from './components/Breadcrumbs';
 import CompanyInfo from './components/CompanyInfo';
 import Categories from './components/Categories';
 import Achievements from './components/Achievements';
 import Scroller from '@/components/Scroller';
 import SimilarCompany from './components/SimilarCompany';
+import ReviewList from './components/ReviewList';
+import Pagination from '@/components/Pagination';
+import { SearchParams } from '@/types/companies';
 
 interface Props {
   params: {
     id: string;
   };
+  searchParams: SearchParams;
 }
 
 interface Company {
@@ -24,9 +28,9 @@ export async function generateStaticParams() {
   }));
 }
 
-const CompanyPage: React.FC<Props> = async ({ params }) => {
+const CompanyPage: React.FC<Props> = async ({ params, searchParams }) => {
   const company = await getCompanyData(params.id);
-
+  const { data, pagination } = await getSingleCompanyReviewData(params.id, searchParams);
   return (
     <main className="mx-auto grid max-w-[1424px] grid-cols-1 gap-4 p-2 xl:grid-cols-8 xl:px-2 xl:py-16 2xl:px-0">
       <div className="xl:col-span-6">
@@ -49,6 +53,12 @@ const CompanyPage: React.FC<Props> = async ({ params }) => {
           <Scroller name="Awards">
             <Achievements data={company.awards} />
           </Scroller>
+          <ReviewList data={data} />
+          <Pagination
+            pathname={`/companies/${params.id}`}
+            pagination={pagination}
+            searchParams={searchParams}
+          />
         </article>
       </div>
       <div className="xl:col-span-2">
