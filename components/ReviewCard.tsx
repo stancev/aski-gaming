@@ -9,8 +9,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const ReviewCard = ({ review }: { review: Review }) => {
+  const reviewText = review.companyTotalRatings === 1 ? 'Review' : 'Reviews';
+
   return (
-    <Card className="w-304 flex flex-col p-3 sm:p-4 lg:rounded-md 2xl:w-464">
+    <Card className="w-304 flex flex-col p-3  hover:bg-slate-50 sm:p-4 lg:rounded-md 2xl:w-464">
       <Link href={`/companies/${review.company.id}`} passHref>
         <CardHeader className="flex-row items-center space-y-0 p-0">
           <div className="mr-3 mt-1">
@@ -23,19 +25,23 @@ const ReviewCard = ({ review }: { review: Review }) => {
             />
           </div>
           <div className="flex flex-col justify-start">
-            <p className="text-sm font-semibold text-heading xl:text-base">{review.company.name}</p>
+            <p className="text-sm font-semibold text-heading hover:text-primary xl:text-base">
+              {review.company.name}
+            </p>
             <div className="flex">
-              <p className="text-xs">4.0 / 32 reviews </p>
+              <p className="text-xs">
+                {review.companyAverageRating} / {review.companyTotalRatings} {reviewText}{' '}
+              </p>
               {/* <p className="text-xs font-semibold text-primary">+8</p> */}
             </div>
             <div className="mt-1">
-              <Stars />
+              <Stars rating={review.companyAverageRating} />
             </div>
           </div>
         </CardHeader>
       </Link>
-      <Link href="/reviews">
-        <CardTitle className="mt-3 text-base font-semibold text-heading xl:mt-8 xl:text-[22px]">
+      <Link href={`/companies/${review.company.id}`} passHref>
+        <CardTitle className="mt-3 text-base font-semibold text-heading hover:text-primary xl:mt-8 xl:text-[22px]">
           {review.title}
         </CardTitle>
       </Link>
@@ -43,8 +49,10 @@ const ReviewCard = ({ review }: { review: Review }) => {
         {review.description}
       </CardDescription>
       <div className="mt-2 flex justify-between gap-5 pr-2">
-        <Link href="/reviews">
-          <p className="text-xs font-semibold text-primary xl:text-sm">Full Review</p>
+        <Link href={`/companies/${review.company.id}`} passHref>
+          <p className="text-xs font-semibold text-primary hover:text-black xl:text-sm">
+            Full Review
+          </p>
         </Link>
         <ReviewerStars rating={review.rating} />
       </div>
@@ -67,7 +75,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
           </Avatar>
           <div className="flex flex-col justify-center">
             <div className="flex items-center justify-start">
-              <h4 className="mr-3 text-base font-semibold capitalize text-heading xl:text-xl">
+              <h4 className="mr-3 text-base font-semibold capitalize text-heading hover:text-primary xl:text-xl">
                 {review.user.username}
               </h4>
               {review.user.confirmed == true ? (

@@ -61,17 +61,17 @@ const CategoriesFilter = ({ categories }: Props) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[160px] sm:w-[200px] h-10 sm:h-12 justify-between sm:text-sm lg:text-base"
+          className="h-10 w-[160px] justify-between sm:h-12 sm:w-[200px] sm:text-sm lg:text-base"
         >
-          <div className="w-[160px] sm:w-max-[110px] overflow-hidden whitespace-nowrap text-overflow-ellipsis text-overflow-ellipsis">
+          <div className="sm:w-max-[110px] text-overflow-ellipsis text-overflow-ellipsis w-[160px] overflow-hidden whitespace-nowrap">
             {value ? setActiveCategory(value) : 'All categories'}
           </div>
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[160px] sm:w-[200px] p-0">
+      <PopoverContent className="w-[160px] p-0 sm:w-[200px]">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search categories..." />
           <CommandEmpty>No categories found.</CommandEmpty>
           <CommandGroup>
             <CommandItem

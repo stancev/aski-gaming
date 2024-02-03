@@ -26,7 +26,7 @@ const CompanyInfo: React.FC<Props> = ({ company }) => {
           <div className="mb-4 sm:mb-0">
             <div className="flex justify-between sm:justify-normal">
               <div className="flex">
-                <h1 className="my-0 me-3 py-0 text-[32px] font-semibold text-heading">
+                <h1 className="my-0 me-3 py-0 text-[20px] font-semibold text-heading sm:text-[32px]">
                   {company.name}
                 </h1>
                 <Popover>

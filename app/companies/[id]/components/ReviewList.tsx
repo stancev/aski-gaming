@@ -2,11 +2,11 @@ import CompanyReviewCard from './CompanyReviewCard';
 
 const ReviewList = ({ data }: { data: any[] }) => {
   return (
-    <div className="mb-4 flex-col rounded-xl bg-white p-4">
+    <div className="my-8 flex-col">
       {data.length > 0 ? (
         data.map((review: any) => <CompanyReviewCard key={review.id} review={review} />)
       ) : (
-        <p className="text-center">No reviews yet</p>
+        <p className="text-center">No reviews yet. </p>
       )}
     </div>
   );

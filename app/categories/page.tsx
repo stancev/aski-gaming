@@ -29,7 +29,7 @@ const Categories: React.FC<Props> = async ({ searchParams }) => {
       <div className="relative z-10 flex min-h-screen flex-col items-center p-2 xl:p-16">
         <Headings
           title="Explore more than 80+ different categories"
-          subtitle="Secondary line of text that goes here"
+          subtitle="Find the best companies in the iGaming industry by browsing through many available categories"
         />
         <Search placeholder="Search categories" />
 

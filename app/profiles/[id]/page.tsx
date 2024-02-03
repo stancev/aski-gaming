@@ -1,18 +1,24 @@
-import { getProfileData } from '@/lib/getData';
+import { getProfileData, getProfileReviews } from '@/lib/getData';
 import Image from 'next/image';
 import ProfileBox from './components/ProfileBox';
 import FullReviewCard from './components/FullReviewCard';
 import Breadcrumbs from './components/Breadcrumbs';
+import { SearchParams } from '@/types/companies';
+import Pagination from '@/components/Pagination';
 
 interface Props {
   params: {
     id: string;
-    page: number;
   };
+  searchParams: SearchParams;
 }
 
-const ProfilePage: React.FC<Props> = async ({ params }) => {
+const ProfilePage: React.FC<Props> = async ({ params, searchParams }) => {
   const profile = await getProfileData(params.id);
+  const { data: reviews, pagination } = await getProfileReviews(params.id, searchParams);
+  const averageRating = Math.round(
+    reviews.reduce((total: any, review: any) => total + review.rating / reviews.length, 0)
+  );
 
   return (
     <section>
@@ -41,12 +47,17 @@ const ProfilePage: React.FC<Props> = async ({ params }) => {
           <article className="min-h-[1000px] w-full rounded-b-md bg-white p-4 shadow-lg xl:p-12">
             <div className="absolute top-[-10px] max-w-[451px] -translate-y-1/2 transform">
               <Breadcrumbs username={profile.username} />
-              <ProfileBox profile={profile} />
+              <ProfileBox profile={profile} rating={averageRating} />
             </div>
             <div className="mt-20 flex flex-wrap justify-center">
-              {profile.reviews.map((review: any) => (
+              {reviews.map((review: any) => (
                 <FullReviewCard key={review.id} review={review} />
               ))}
+              <Pagination
+                pathname={`/profiles/${params.id}`}
+                pagination={pagination}
+                searchParams={searchParams}
+              />
             </div>
           </article>
         </div>

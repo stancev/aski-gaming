@@ -8,9 +8,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 const CompanyCard = ({ company }: { company: Company }) => {
   const categoriesNumber = company.categories.length;
+  const reviewText = company.totalRatings === 1 ? 'Review' : 'Reviews';
   return (
     <Link href={`/companies/${company.id}`} passHref>
-      <Card className="w-304 h-178 p-3 sm:p-4 lg:rounded-md 2xl:h-253 2xl:w-464">
+      <Card className="w-304 h-178 p-3 hover:bg-gray-50 sm:p-4 lg:rounded-md 2xl:h-253 2xl:w-464">
         <div className="flex min-h-[109px] flex-row border-b border-gray-300 pb-4">
           <Image
             className="mr-3 rounded-sm"
@@ -69,8 +70,10 @@ const CompanyCard = ({ company }: { company: Company }) => {
               )}
             </div>
             <div className="flex items-center justify-between">
-              <Stars />
-              <p className="text-xs">4.0 / 32 reviews</p>
+              <Stars rating={company.averageRating} />
+              <p className="text-xs">
+                {company.averageRating} / {company.totalRatings} {reviewText}
+              </p>
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
-import Stars from '@/components/ui/stars';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import ReviewerStars from '@/components/ui/reviewerstars';
 
 interface Profile {
   username: string;
@@ -17,9 +17,10 @@ interface Profile {
 interface ProfileBoxProps {
   profile: Profile;
   className?: string;
+  rating?: number;
 }
 
-const ProfileBox: React.FC<ProfileBoxProps> = ({ profile, className }) => {
+const ProfileBox: React.FC<ProfileBoxProps> = ({ profile, className, rating }) => {
   const reviewText = profile.reviews.length === 1 ? 'Review' : 'Reviews';
   return (
     <div className={className}>
@@ -92,7 +93,7 @@ const ProfileBox: React.FC<ProfileBoxProps> = ({ profile, className }) => {
             <div className="my-3">
               {profile.reviews.length} {reviewText}
             </div>
-            <Stars />
+            <ReviewerStars rating={rating || 0} />
             <div className="mt-2.5">Average rating</div>
           </div>
         </div>
