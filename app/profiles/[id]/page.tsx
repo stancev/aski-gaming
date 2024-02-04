@@ -22,7 +22,7 @@ const ProfilePage: React.FC<Props> = async ({ params, searchParams }) => {
 
   return (
     <section>
-      <div style={{ width: '100%', height: '200px', position: 'relative' }}>
+      <div className="relative h-[140px] w-full lg:h-[200px]">
         <Image
           src="/profile-cover.svg"
           quality={100}

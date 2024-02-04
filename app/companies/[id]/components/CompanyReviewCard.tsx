@@ -13,9 +13,8 @@ const CompanyReviewCard = ({ review }: { review: Review }) => {
     .toString()
     .padStart(2, '0')}.${date.getFullYear()}`;
   return (
-    <Link href={`/profiles/${review.user.id}`}>
-      <Card className="my-3 flex w-full max-w-[1074px] flex-col p-3 hover:bg-gray-50 sm:p-4 lg:rounded-md">
-        {/* <Link href={`/companies/${review.company.id}`}> */}
+    <Card className="my-3 flex w-full max-w-[1074px] flex-col p-3 sm:p-4 lg:rounded-md">
+      <Link href={`/profiles/${review.user.id}`}>
         <CardHeader className="flex-row items-center justify-between space-y-0 border-b p-0 pb-4">
           <div className="flex items-center">
             <div className="mr-3 mt-1 ">
@@ -35,7 +34,7 @@ const CompanyReviewCard = ({ review }: { review: Review }) => {
               </Avatar>
             </div>
             <div className="flex flex-col justify-start">
-              <p className="text-sm font-semibold text-heading xl:text-xl">
+              <p className="text-sm font-semibold text-heading hover:text-primary xl:text-xl">
                 {review.user.username}
               </p>
               <div className="flex">
@@ -76,19 +75,23 @@ const CompanyReviewCard = ({ review }: { review: Review }) => {
             <p className="mt-3 text-xs">{formattedDate}</p>
           </div>
         </CardHeader>
-        {/* </Link> */}
-        <CardTitle className="mt-3 text-base font-semibold text-heading xl:mt-8 xl:text-[22px]">
-          {review.title}
-        </CardTitle>
-        <CardDescription className="mt-2 min-h-[60px] text-sm leading-6">
-          {review.description}
-        </CardDescription>
-        <div className="mt-2 flex justify-between gap-5 pr-2">
-          <p className="text-xs font-semibold text-primary xl:text-sm"> </p>
-          <ReviewerStars rating={review.rating} />
-        </div>
-      </Card>
-    </Link>
+      </Link>
+      <CardTitle className="mt-3 text-base font-semibold text-heading xl:mt-8 xl:text-[22px]">
+        {review.title}
+      </CardTitle>
+      <CardDescription className="mt-2 min-h-[60px] text-sm leading-6">
+        {review.description}
+      </CardDescription>
+      <div className="mt-2 flex justify-between gap-5 pr-2">
+        <Link href={`/profiles/${review.user.id}`}>
+          <p className="text-xs font-semibold text-primary hover:text-black xl:text-sm">
+            View profile
+          </p>
+        </Link>
+        <p className="text-xs font-semibold text-primary xl:text-sm"> </p>
+        <ReviewerStars rating={review.rating} />
+      </div>
+    </Card>
   );
 };
 

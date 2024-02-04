@@ -12,7 +12,7 @@ import Scroller from '@/components/Scroller';
 import SimilarCompanyList from './components/SimilarCompanyList';
 import ReviewList from './components/ReviewList';
 import Pagination from '@/components/Pagination';
-import { SearchParams } from '@/types/companies';
+import { SearchParams, Review } from '@/types/companies';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -45,6 +45,17 @@ const CompanyPage: React.FC<Props> = async ({ params, searchParams }) => {
     company.categories[0].id,
     company.id
   );
+  let averageRating = 0;
+  let totalRatings = 0;
+  if (company.reviews.length > 0) {
+    const totalRating = company.reviews.reduce(
+      (total: number, review: Review) => total + review.rating,
+      0
+    );
+    averageRating = parseFloat((totalRating / company.reviews.length).toFixed(1));
+    totalRatings = company.reviews.length;
+  }
+
   return (
     <main>
       <Image
@@ -61,7 +72,11 @@ const CompanyPage: React.FC<Props> = async ({ params, searchParams }) => {
         <div className="xl:col-span-6">
           <Breadcrumbs name={company.name} />
           <article className="mt-2 w-full rounded-md bg-white p-4 xl:p-12">
-            <CompanyInfo company={company} />
+            <CompanyInfo
+              company={company}
+              averageRating={averageRating}
+              totalRatings={totalRatings}
+            />
 
             <Scroller name="Categories">
               <Categories data={company.categories} />

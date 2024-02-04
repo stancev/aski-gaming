@@ -12,7 +12,7 @@ export async function getCategories() {
 }
 
 export async function getCategoryFull(searchParams: any) {
-  let url = `${process.env.API_URL}/categories?populate=*`;
+  let url = `${process.env.API_URL}/categories?populate=companies.logo.url`;
 
   if (searchParams.search) {
     url += `&filters[name][$contains]=${searchParams.search}`;

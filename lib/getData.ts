@@ -170,7 +170,7 @@ export async function getProfileReviews(id: string, searchParams: SearchParams) 
     company: 'filters[company][id][$eq]=${company}'
   };
   const updatedStrapiQuery = generateQueryParams(searchParams, strapiQuery);
-  let url = `${process.env.API_URL}/reviews?sort=createdAt:desc&populate=company.logo&pagination[page]=${page}&pagination[pageSize]=5&filters[user][id][$eq]=${id}`;
+  let url = `${process.env.API_URL}/reviews?sort=createdAt:desc&populate=company.logo.url&pagination[page]=${page}&pagination[pageSize]=5&filters[user][id][$eq]=${id}`;
 
   if (updatedStrapiQuery) {
     url += updatedStrapiQuery;

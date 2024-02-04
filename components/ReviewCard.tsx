@@ -17,8 +17,8 @@ const ReviewCard = ({ review }: { review: Review }) => {
         <CardHeader className="flex-row items-center space-y-0 p-0">
           <div className="mr-3 mt-1">
             <Image
-              className="rounded-sm object-cover"
-              alt="netent logo"
+              className="object-cover"
+              alt={`${review.company.name} logo`}
               src={`${process.env.STRAPI_URL}${review.company.logo.url}`}
               width={48}
               height={48}

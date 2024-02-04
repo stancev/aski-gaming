@@ -7,9 +7,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 interface Props {
   company: Company;
+  averageRating: number;
+  totalRatings: number;
 }
 
-const CompanyInfo: React.FC<Props> = ({ company }) => {
+const CompanyInfo: React.FC<Props> = ({ company, averageRating, totalRatings }) => {
+  const reviewText = totalRatings === 1 ? 'Review' : 'Reviews';
+
   return (
     <>
       <section className="flex">
@@ -111,8 +115,10 @@ const CompanyInfo: React.FC<Props> = ({ company }) => {
             <p className="mb-2 mt-0 text-sm">
               {company.country}, {company.city}
             </p>
-            <p className="mb-1 text-xs">4.0 / 32 reviews</p>
-            <Stars />
+            <p className="mb-1 text-xs">
+              {averageRating} / {totalRatings} {reviewText}
+            </p>
+            <Stars rating={averageRating} />
           </div>
           <div className="flex space-x-5 text-primary">
             <div className="flex items-center">
