@@ -47,14 +47,14 @@ const Header = async () => {
             </Button>
           ) : (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center">
-                <Avatar className="mr-3 h-[34px] w-[34px]">
+              <DropdownMenuTrigger className="flex items-center text-xs md:text-base">
+                <Avatar className="mr-1 h-[24px] w-[24px] md:mr-3 md:h-[34px] md:w-[34px]">
                   <AvatarImage
                     className="object-cover"
                     alt="reviewer avatar"
                     src={session?.user?.image ? `${session?.user?.image}` : undefined}
                   />
-                  <AvatarFallback className="text-2xl">
+                  <AvatarFallback className="text-xl md:text-2xl">
                     {session?.user?.name.substring(0, 1)}
                   </AvatarFallback>
                 </Avatar>

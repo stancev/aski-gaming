@@ -14,7 +14,7 @@ export default function DialogDemo() {
       <DialogTrigger asChild>
         <Image src="/icons/dots-ico.svg" alt="Menu" width={25} height={25} />
       </DialogTrigger>
-      <DialogContent className="h-screen min-w-full">
+      <DialogContent className="h-[99%] min-w-full border-0 shadow-none">
         <DialogHeader>
           <DialogClose asChild>
             <Link href="/" className="py-2 text-base leading-10">
