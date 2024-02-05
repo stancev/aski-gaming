@@ -41,7 +41,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
         </CardHeader>
       </Link>
       <Link href={`/companies/${review.company.id}`} passHref>
-        <CardTitle className="mt-3 text-base font-semibold text-heading hover:text-primary xl:mt-8 xl:text-[22px]">
+        <CardTitle className="mt-3 line-clamp-1 text-base font-semibold text-heading hover:text-primary xl:mt-8 xl:text-[22px]">
           {review.title}
         </CardTitle>
       </Link>
