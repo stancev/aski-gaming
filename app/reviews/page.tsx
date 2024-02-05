@@ -6,6 +6,8 @@ import Skeleton from '@/components/Skeleton';
 import Pagination from '@/components/Pagination';
 import ReviewList from '@/app/reviews/ReviewList';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 interface Props {
   searchParams: SearchParams;
 }
@@ -35,8 +37,21 @@ const Reviews: React.FC<Props> = async ({ searchParams }) => {
             <ReviewList searchParams={searchParams} />
           </Suspense>
         </section>
-
-        <Pagination pathname="/reviews" pagination={pagination} searchParams={searchParams} />
+        <div className="flex w-full max-w-[1424px] flex-col justify-between md:flex-row">
+          <Link href="/reviews" className="mx-auto mt-10 w-full text-base lg:mx-0 lg:w-[330px]">
+            <Button className="mx-auto w-full lg:mx-0">
+              <Image
+                alt="message-circle icon"
+                src="/message-circle-white.svg"
+                height={20}
+                width={20}
+                className="mr-2"
+              />
+              Review this company
+            </Button>
+          </Link>
+          <Pagination pathname="/reviews" pagination={pagination} searchParams={searchParams} />
+        </div>
       </div>
     </main>
   );

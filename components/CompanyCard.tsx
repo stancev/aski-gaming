@@ -16,7 +16,7 @@ const CompanyCard = ({ company }: { company: Company }) => {
           <Image
             className="mr-3 rounded-sm"
             alt={`${company.name} logo`}
-            src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${company.logo.url}`}
+            src={`${process.env.STRAPI_URL}${company.logo.url}`}
             width={92}
             height={92}
             style={{ objectFit: 'contain' }}

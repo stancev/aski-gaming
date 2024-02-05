@@ -3,6 +3,7 @@ import Slider from '@/components/Slider';
 import Image from 'next/image';
 import { getHomepageCompanies } from '@/lib/getData';
 import { Company } from '@/types/companies';
+import CompanyCard from '@/components/CompanyCard';
 
 const CompaniesSection = async () => {
   const { data: featuredCompanies } = await getHomepageCompanies('featured');
@@ -24,7 +25,11 @@ const CompaniesSection = async () => {
       <div className="relative z-10 flex justify-end py-4 pl-4 pr-0 lg:py-8 2xl:pl-0">
         <div className=" overflow-hidden text-left 2xl:ml-auto 2xl:w-5/6 2xl:min-w-[1658px]">
           <h2 className="z-10 mb-2 text-base font-semibold text-heading md:text-2xl">Featured</h2>
-          <Slider companies={featuredCompanies} />
+          <Slider>
+            {featuredCompanies.map((company: Company) => (
+              <CompanyCard company={company} key={company.id} />
+            ))}
+          </Slider>
           <div className="mt-2">
             <Link href="/companies?featured=true" className="font-semibold text-primary">
               View all
@@ -37,7 +42,11 @@ const CompaniesSection = async () => {
           <h2 className="z-10 mb-2 text-base font-semibold text-heading md:text-2xl">
             Most Reviews
           </h2>
-          <Slider companies={mostReviews} />
+          <Slider>
+            {mostReviews.map((company: Company) => (
+              <CompanyCard company={company} key={company.id} />
+            ))}
+          </Slider>
           <div className="mt-2">
             <Link href="/companies?featured=true" className="font-semibold text-primary">
               View all
@@ -48,7 +57,11 @@ const CompaniesSection = async () => {
       <div className="relative z-10 flex justify-end py-4 pl-4 pr-0 lg:py-8 2xl:pl-0">
         <div className=" overflow-hidden text-left 2xl:ml-auto 2xl:w-5/6 2xl:min-w-[1658px]">
           <h2 className="mb-2 text-base font-semibold text-heading md:text-2xl">New</h2>
-          <Slider companies={newCompanies} />
+          <Slider>
+            {newCompanies.map((company: Company) => (
+              <CompanyCard company={company} key={company.id} />
+            ))}
+          </Slider>
           <div className="mt-2">
             <Link href="/companies?sort=newest" className="font-semibold text-primary">
               View all

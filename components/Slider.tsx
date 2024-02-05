@@ -1,5 +1,4 @@
 'use client';
-import CompanyCard from '@/components/CompanyCard';
 import React, { useState, useEffect } from 'react';
 import {
   Carousel,
@@ -9,9 +8,12 @@ import {
   CarouselPrevious,
   type CarouselApi
 } from '@/components/ui/carousel';
-import { Company } from '@/types/companies';
 
-const Slider = ({ companies }: { companies: Company[] }) => {
+type SliderProps = {
+  children: React.ReactElement;
+};
+
+const Slider: React.FC<SliderProps> = ({ children }) => {
   const [api, setApi] = useState<CarouselApi>();
   const [visibleSlides, setVisibleSlides] = useState<number[]>([]);
   useEffect(() => {
@@ -48,10 +50,10 @@ const Slider = ({ companies }: { companies: Company[] }) => {
       className="md: w-full max-w-full"
     >
       <CarouselContent className="pr-20 2xl:pr-48">
-        {companies.map((company: any, index) => (
+        {React.Children.map(children, (child, index) => (
           <CarouselItem key={index} className="md:max-w-full md:basis-1/2 lg:basis-1/3">
             <div style={{ opacity: visibleSlides.includes(index) ? 1 : 0.3 }}>
-              <CompanyCard key={company.id} company={company} />
+              {React.cloneElement(child)}
             </div>
           </CarouselItem>
         ))}
