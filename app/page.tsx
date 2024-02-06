@@ -10,8 +10,8 @@ export default function Home() {
     <main>
       <HeroSection />
       <CompaniesSection />
-      <ReviewsSection />
       <AboutSection />
+      <ReviewsSection />
       <CounterSection />
       <MapSection />
     </main>
