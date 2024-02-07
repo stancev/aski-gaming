@@ -12,7 +12,7 @@ const ReviewCard = ({ review }: { review: Review }) => {
   const reviewText = review.companyTotalRatings === 1 ? 'Review' : 'Reviews';
 
   return (
-    <Card className="w-304 flex flex-col p-3  hover:bg-slate-50 sm:p-4 lg:rounded-md 2xl:w-464">
+    <Card className="w-304 z-10 flex flex-col p-3  hover:bg-slate-50 sm:p-4 lg:rounded-md 2xl:w-464">
       <Link href={`/companies/${review.company.id}`} passHref>
         <CardHeader className="flex-row items-center space-y-0 p-0">
           <div className="mr-3 mt-1">

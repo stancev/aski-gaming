@@ -24,9 +24,7 @@ const Slider: React.FC<SliderProps> = ({ children }) => {
     const updateVisibleSlides = () => {
       const firstVisibleSlide = api.selectedScrollSnap();
       let slidesInView;
-      if (window.matchMedia('(min-width: 2384px)').matches) {
-        slidesInView = 4;
-      } else if (window.matchMedia('(min-width: 1024px)').matches) {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
         slidesInView = 3;
       } else if (window.matchMedia('(min-width: 768px)').matches) {
         slidesInView = 2;
@@ -53,10 +51,7 @@ const Slider: React.FC<SliderProps> = ({ children }) => {
     >
       <CarouselContent className="pr-20 2xl:pr-[242px]">
         {React.Children.map(children, (child, index) => (
-          <CarouselItem
-            key={index}
-            className="4xl:basis-1/4 md:max-w-full md:basis-1/2 lg:basis-1/3"
-          >
+          <CarouselItem key={index} className="md:max-w-full md:basis-1/2 lg:basis-1/3">
             <div style={{ opacity: visibleSlides.includes(index) ? 1 : 0.3 }}>
               {React.cloneElement(child)}
             </div>
