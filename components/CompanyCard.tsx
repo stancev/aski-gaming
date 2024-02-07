@@ -6,12 +6,12 @@ import { cn } from '@/lib/utils';
 import { Company } from '@/types/companies';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-const CompanyCard = ({ company }: { company: Company }) => {
+const CompanyCard = ({ company, className }: { company: Company; className?: string }) => {
   const categoriesNumber = company.categories.length;
   const reviewText = company.totalRatings === 1 ? 'Review' : 'Reviews';
   return (
     <Link href={`/companies/${company.id}`} passHref>
-      <Card className="w-304 h-178 p-3 hover:bg-gray-50 sm:p-4 lg:rounded-md 2xl:h-253 2xl:w-464">
+      <Card className={`h-178 p-3 hover:bg-gray-50 sm:p-4 lg:rounded-md 2xl:h-253 ${className}`}>
         <div className="flex min-h-[109px] flex-row border-b border-gray-300 pb-4">
           <Image
             className="mr-3 rounded-sm"
