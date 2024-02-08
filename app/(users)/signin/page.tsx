@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
-import GoogleSignInButton from '@/components/GoogleSignInButton';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import LinkedinSignInButton from '@/components/LinkedinSignInButton';
 
 const SignInPage = () => {
   const [email, setEmail] = useState('');
@@ -58,7 +58,7 @@ const SignInPage = () => {
           <div className="mx-auto my-10 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
             or
           </div>
-          <GoogleSignInButton />
+          <LinkedinSignInButton />
         </div>
       </div>
     </section>

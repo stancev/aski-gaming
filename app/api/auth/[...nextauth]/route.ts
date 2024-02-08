@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import LinkedInProvider from 'next-auth/providers/linkedin';
 //import axios from 'axios';
 
 export const authOptions = {
@@ -8,6 +9,67 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+    }),
+    LinkedInProvider({
+      clientId: process.env.LINKEDIN_CLIENT_ID as string,
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET as string,
+      authorization: {
+        params: { scope: 'openid profile email' }
+      },
+      issuer: 'https://www.linkedin.com',
+      jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
+      async profile(profile, tokens) {
+        console.log(tokens);
+        const defaultImage = 'https://cdn-icons-png.flaticon.com/512/174/174857.png';
+        const userLinkedInData = {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture ?? defaultImage
+        };
+        // Fetch user data from Strapi
+        let res = await fetch(`${process.env.API_URL}/users?filters[email]=${profile.email}`);
+        let data = await res.json();
+
+        // If user does not exist, create a new user
+        try {
+          if (data.length === 0) {
+            console.log(userLinkedInData.name);
+            //const sanitizedUsername = userLinkedInData.name.replace(/\s+/g, '');
+            console.log(profile);
+            res = await fetch(`${process.env.API_URL}/auth/local/register`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                username: profile.given_name,
+                email: userLinkedInData.email,
+                password: 'Test12345'
+              })
+            });
+            data = await res.json();
+            if (!data.user) {
+              throw new Error('User registration failed');
+            }
+          }
+        } catch (error) {
+          console.error('An error occurred:', error);
+          throw error; // Propagate the error up the call stack
+        }
+
+        // Authenticate user
+        res = await fetch(`${process.env.API_URL}/auth/local`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            identifier: profile.email,
+            password: 'Test12345'
+          })
+        });
+
+        const authData = await res.json();
+        console.log(authData);
+        return { ...userLinkedInData, jwt: authData.jwt };
+      }
     }),
     CredentialsProvider({
       name: 'credentials',
