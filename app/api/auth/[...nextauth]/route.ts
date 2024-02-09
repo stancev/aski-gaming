@@ -19,7 +19,7 @@ export const authOptions = {
       issuer: 'https://www.linkedin.com',
       jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
       async profile(profile, tokens) {
-        console.log(tokens);
+        console.log(profile);
         const defaultImage = 'https://cdn-icons-png.flaticon.com/512/174/174857.png';
         const userLinkedInData = {
           id: profile.sub,
@@ -27,48 +27,53 @@ export const authOptions = {
           email: profile.email,
           image: profile.picture ?? defaultImage
         };
+        const res = await fetch(
+          `${process.env.API_URL}/auth/linkedin/callback?access_token=${tokens.access_token}`
+        );
+        const data = await res.json();
+        console.log(tokens);
+        console.log(data);
+        return { ...userLinkedInData, jwt: data.jwt };
         // Fetch user data from Strapi
-        let res = await fetch(`${process.env.API_URL}/users?filters[email]=${profile.email}`);
-        let data = await res.json();
+        // let res = await fetch(`${process.env.API_URL}/users?filters[email]=${profile.email}`);
+        //let data = await res.json();
 
-        // If user does not exist, create a new user
-        try {
-          if (data.length === 0) {
-            console.log(userLinkedInData.name);
-            //const sanitizedUsername = userLinkedInData.name.replace(/\s+/g, '');
-            console.log(profile);
-            res = await fetch(`${process.env.API_URL}/auth/local/register`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                username: profile.given_name,
-                email: userLinkedInData.email,
-                password: 'Test12345'
-              })
-            });
-            data = await res.json();
-            if (!data.user) {
-              throw new Error('User registration failed');
-            }
-          }
-        } catch (error) {
-          console.error('An error occurred:', error);
-          throw error; // Propagate the error up the call stack
-        }
+        // // If user does not exist, create a new user
+        // try {
+        //   if (data.length === 0) {
+        //     console.log(userLinkedInData.name);
+        //     //const sanitizedUsername = userLinkedInData.name.replace(/\s+/g, '');
+        //     console.log(profile);
+        //     res = await fetch(`${process.env.API_URL}/auth/local/register`, {
+        //       method: 'POST',
+        //       headers: { 'Content-Type': 'application/json' },
+        //       body: JSON.stringify({
+        //         username: profile.given_name,
+        //         email: userLinkedInData.email,
+        //         password: 'Test12345'
+        //       })
+        //     });
+        //     data = await res.json();
+        //     if (!data.user) {
+        //       throw new Error('User registration failed');
+        //     }
+        //   }
+        // } catch (error) {
+        //   console.error('An error occurred:', error);
+        //   throw error; // Propagate the error up the call stack
+        // }
 
         // Authenticate user
-        res = await fetch(`${process.env.API_URL}/auth/local`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            identifier: profile.email,
-            password: 'Test12345'
-          })
-        });
+        // res = await fetch(`${process.env.API_URL}/auth/local`, {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     identifier: profile.email,
+        //     password: 'Test12345'
+        //   })
+        // });
 
-        const authData = await res.json();
-        console.log(authData);
-        return { ...userLinkedInData, jwt: authData.jwt };
+        // const authData = await res.json();
       }
     }),
     CredentialsProvider({
