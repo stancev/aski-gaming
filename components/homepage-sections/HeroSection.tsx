@@ -1,11 +1,7 @@
 import HomeSearch from '@/components/HomeSearch';
 import Image from 'next/image';
-import { getData } from '@/lib/getData';
-import { SearchParams } from '@/types/companies';
 
-const HeroSection = async ({ searchParams }: { searchParams: SearchParams }) => {
-  const companies = await getData(searchParams);
-
+const HeroSection = async () => {
   return (
     <section className="relative flex h-full w-full items-center justify-center overflow-hidden">
       <Image
@@ -19,14 +15,14 @@ const HeroSection = async ({ searchParams }: { searchParams: SearchParams }) => 
       <div className="z-10 flex w-full flex-col xl:max-w-[1440px] xl:flex-row">
         <div className="flex flex-1 flex-col items-center justify-center px-4 pt-11 text-center lg:pt-14 xl:items-start xl:text-left">
           <h1 className="text-[24px] font-semibold leading-normal text-white md:text-[28px] md:leading-[57px] lg:text-[46px] xl:leading-[77.8px]">
-            Browse, Connect, Review
+            iGaming News & Reviews
           </h1>
           <p className="mb-3 mt-3 text-[14px] font-medium leading-normal text-white lg:text-[20px] xl:text-[24px] xl:leading-[30.1px]">
-            Make an informed decision based on real opinions
+            Get up to date iGaming news and read real opinions from the iGaming community.
           </p>
 
           <div className="mt-4 w-full xl:mt-6 xl:w-[636px]">
-            <HomeSearch companies={companies.data} />
+            <HomeSearch placeholder={'Search companies'} />
           </div>
         </div>
 

@@ -4,7 +4,7 @@ import Stars from '@/components/ui/stars';
 
 const CompanyCard = () => {
   return (
-    <Card className="h-178 min-w-[304px] p-3 sm:p-4 lg:rounded-md 2xl:min-h-[253px] 2xl:min-w-[464px]">
+    <Card className="h-178 min-w-[304px] max-w-[464px] p-3 sm:p-4 lg:rounded-md 2xl:min-h-[253px] 2xl:min-w-[464px]">
       <div className="flex flex-row border-b border-gray-300 pb-4">
         <Image
           className="mr-3 rounded-sm"

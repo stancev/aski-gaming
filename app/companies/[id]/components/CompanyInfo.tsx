@@ -3,12 +3,17 @@ import Stars from '@/components/ui/stars';
 import { Separator } from '@/components/ui/separator';
 import { Company } from '@/types/companies';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface Props {
   company: Company;
+  averageRating: number;
+  totalRatings: number;
 }
 
-const CompanyInfo: React.FC<Props> = ({ company }) => {
+const CompanyInfo: React.FC<Props> = ({ company, averageRating, totalRatings }) => {
+  const reviewText = totalRatings === 1 ? 'Review' : 'Reviews';
+
   return (
     <>
       <section className="flex">
@@ -25,7 +30,7 @@ const CompanyInfo: React.FC<Props> = ({ company }) => {
           <div className="mb-4 sm:mb-0">
             <div className="flex justify-between sm:justify-normal">
               <div className="flex">
-                <h1 className="my-0 me-3 py-0 text-[32px] font-semibold text-heading">
+                <h1 className="my-0 me-3 py-0 text-[20px] font-semibold text-heading sm:text-[32px]">
                   {company.name}
                 </h1>
                 <Popover>
@@ -75,13 +80,45 @@ const CompanyInfo: React.FC<Props> = ({ company }) => {
                   </PopoverContent>
                 </Popover>
               </div>
-              {company.claimed && <Image alt="claimed" src="/claimed.svg" width={24} height={24} />}
+              {company.claimed == true ? (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Image alt="claimed company icon" src="/claimed.svg" width={24} height={24} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>
+                        This company has been claimed. AskiGaming team verified the user running
+                        this company&apos;s profile.
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              ) : (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Image
+                        alt="unclaimed company icon"
+                        src="/unclaimed.svg"
+                        width={24}
+                        height={24}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>This company has not been claimed yet.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
             </div>
             <p className="mb-2 mt-0 text-sm">
               {company.country}, {company.city}
             </p>
-            <p className="mb-1 text-xs">4.0 / 32 reviews</p>
-            <Stars />
+            <p className="mb-1 text-xs">
+              {averageRating} / {totalRatings} {reviewText}
+            </p>
+            <Stars rating={averageRating} />
           </div>
           <div className="flex space-x-5 text-primary">
             <div className="flex items-center">

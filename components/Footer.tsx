@@ -5,7 +5,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col items-center ">
+    <footer className="flex flex-col items-center border-t">
       <div className="sm: mt-5 flex w-full max-w-[1420px] flex-col items-start justify-between gap-5 p-8 md:flex-row md:p-16">
         <div className="flex flex-col">
           <h3 className="text-lg font-medium capitalize text-heading md:text-xl">About</h3>
