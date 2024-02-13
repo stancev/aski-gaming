@@ -32,6 +32,8 @@ export interface Company {
   featured: boolean;
   categories: Category[];
   logo: Logo;
+  averageRating: number;
+  totalRatings: number;
 }
 
 export interface Pagination {
@@ -89,6 +91,8 @@ export interface Review {
   publishedAt: string;
   company: Company;
   user: User;
+  companyAverageRating: number;
+  companyTotalRatings: number;
 }
 
 export type SearchParams = { [key: string]: string };

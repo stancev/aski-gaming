@@ -2,8 +2,11 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import CounterCard from '@/components/CounterCard';
 import Image from 'next/image';
+import { getHomepageCounters } from '@/lib/getData';
 
-const CounterSection = () => {
+const CounterSection = async () => {
+  const { data } = await getHomepageCounters();
+
   return (
     <section className="relative flex h-full w-full items-center justify-center overflow-hidden lg:p-8">
       <Image
@@ -36,20 +39,20 @@ const CounterSection = () => {
         <div className="grid gap-1 overflow-hidden pl-4">
           <div className="scrollbar-hide flex flex-nowrap gap-4 overflow-x-auto lg:grid lg:grid-cols-2 lg:grid-rows-2 lg:overflow-visible">
             <CounterCard
-              count="4,000+"
+              count={`${data?.Members}`}
               label="Members"
               svg="people-ico.svg"
               className="bg-[#FFD89E] lg:mt-20"
             />
             <CounterCard count="300+" label="Reviews" svg="star-ico.svg" className="bg-[#78A3B1]" />
             <CounterCard
-              count="1,000+"
+              count={`${data?.Companies}`}
               label="Listed Companies"
               svg="building-ico.svg"
               className="bg-[#80287B99]"
             />
             <CounterCard
-              count="10,000+"
+              count={`${data?.Visitors}`}
               label="Unique Visitors"
               svg="chart-ico.svg"
               className="bg-[#80B2FF] lg:-mt-20"

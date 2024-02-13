@@ -28,7 +28,7 @@ const CompaniesPage = async ({ searchParams }: { searchParams: SearchParams }) =
       <div className="relative z-10 flex min-h-screen flex-col items-center p-2 xl:p-16">
         <Headings
           title="Connect With 800+ Industry Players"
-          subtitle="Secondary line of text that goes here"
+          subtitle="Browse the biggest iGaming directory, find the best companies in the industry, and read real reviews from real users"
         />
         <FiltersSection categories={categories.data} isSearchOpen={isSearchOpen} />
 

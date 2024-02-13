@@ -10,7 +10,7 @@ const CompanyList: React.FC<Props> = async ({ searchParams }) => {
   return (
     <>
       {data.map((company: any) => (
-        <CompanyCard key={company.id} company={company} />
+        <CompanyCard key={company.id} company={company} className="w-304 2xl:w-464" />
       ))}
     </>
   );

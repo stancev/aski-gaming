@@ -1,64 +1,66 @@
 'use client';
-import CompanyCardStatic from '@/components/CompanyCardStatic';
-import React, { MutableRefObject, useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi
+} from '@/components/ui/carousel';
 
-const Slider = () => {
-  const [isInteracted, setIsInteracted] = useState(false);
-  const scrollContainerRef = React.useRef(null) as MutableRefObject<HTMLDivElement | null>;
+type SliderProps = {
+  children: React.ReactElement;
+};
 
-  const handleIconClick = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const scrollAmount = direction === 'right' ? 300 : -300;
-      container.scrollTo({
-        left: container.scrollLeft + scrollAmount,
-        behavior: 'smooth'
-      });
+const Slider: React.FC<SliderProps> = ({ children }) => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [visibleSlides, setVisibleSlides] = useState<number[]>([]);
+  useEffect(() => {
+    if (!api) {
+      return;
     }
-  };
+
+    const updateVisibleSlides = () => {
+      const firstVisibleSlide = api.selectedScrollSnap();
+      let slidesInView;
+      if (window.matchMedia('(min-width: 1024px)').matches) {
+        slidesInView = 3;
+      } else if (window.matchMedia('(min-width: 768px)').matches) {
+        slidesInView = 2;
+      } else {
+        slidesInView = 1;
+      }
+      const visibleIndices = Array.from({ length: slidesInView }, (_, i) => firstVisibleSlide + i);
+      setVisibleSlides(visibleIndices);
+    };
+
+    updateVisibleSlides();
+    api.on('select', updateVisibleSlides);
+    window.addEventListener('resize', updateVisibleSlides);
+    return () => window.removeEventListener('resize', updateVisibleSlides);
+  }, [api]);
 
   return (
-    <div className="relative flex max-w-[1430px] overflow-x-hidden">
-      <div
-        className={`mr-[-50px] min-w-[60px] flex-col items-center justify-center ${
-          isInteracted ? 'xs: hidden sm:hidden lg:flex' : 'hidden'
-        }`}
-      >
-        <Image
-          src="/icons/scroll-icon.svg"
-          alt="slider"
-          width={60}
-          height={60}
-          className="rotate-180 cursor-pointer"
-          onClick={() => handleIconClick('left')}
-        />
-      </div>
-      <div
-        ref={scrollContainerRef}
-        className="scrollbar-hide flex flex-nowrap gap-4 overflow-x-auto"
-      >
-        <CompanyCardStatic />
-        <CompanyCardStatic />
-        <CompanyCardStatic />
-        <CompanyCardStatic />
-        <CompanyCardStatic />
-        <CompanyCardStatic />
-      </div>
-      <div className="ml-[-50px] hidden min-w-[60px] flex-col items-center justify-center lg:flex">
-        <Image
-          src="/icons/scroll-icon.svg"
-          alt="slider"
-          width={60}
-          height={60}
-          className="cursor-pointer"
-          onClick={() => {
-            handleIconClick('right');
-            setIsInteracted(true);
-          }}
-        />
-      </div>
-    </div>
+    <Carousel
+      setApi={setApi}
+      opts={{
+        align: 'start'
+      }}
+      className="md: w-full max-w-full  "
+    >
+      <CarouselContent className="pr-20 2xl:pr-[242px]">
+        {React.Children.map(children, (child, index) => (
+          <CarouselItem key={index} className="md:max-w-full md:basis-1/2 lg:basis-1/3">
+            <div style={{ opacity: visibleSlides.includes(index) ? 1 : 0.3 }}>
+              {React.cloneElement(child)}
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   );
 };
 
