@@ -4,7 +4,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 const UserProfile = async () => {
   const session = await getServerSession(authOptions);
-
+  console.log(session);
   if (!session) {
     redirect('/signin?callbackUrl=/protected/server');
   }

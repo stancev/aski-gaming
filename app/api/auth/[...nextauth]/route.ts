@@ -18,62 +18,13 @@ export const authOptions = {
       },
       issuer: 'https://www.linkedin.com',
       jwks_endpoint: 'https://www.linkedin.com/oauth/openid/jwks',
-      async profile(profile, tokens) {
-        console.log(profile);
-        const defaultImage = 'https://cdn-icons-png.flaticon.com/512/174/174857.png';
-        const userLinkedInData = {
+      async profile(profile) {
+        return {
           id: profile.sub,
           name: profile.name,
           email: profile.email,
-          image: profile.picture ?? defaultImage
+          image: profile.picture
         };
-        const res = await fetch(
-          `${process.env.API_URL}/auth/linkedin/callback?access_token=${tokens.access_token}`
-        );
-        const data = await res.json();
-        console.log(tokens);
-        console.log(data);
-        return { ...userLinkedInData, jwt: data.jwt };
-        // Fetch user data from Strapi
-        // let res = await fetch(`${process.env.API_URL}/users?filters[email]=${profile.email}`);
-        //let data = await res.json();
-
-        // // If user does not exist, create a new user
-        // try {
-        //   if (data.length === 0) {
-        //     console.log(userLinkedInData.name);
-        //     //const sanitizedUsername = userLinkedInData.name.replace(/\s+/g, '');
-        //     console.log(profile);
-        //     res = await fetch(`${process.env.API_URL}/auth/local/register`, {
-        //       method: 'POST',
-        //       headers: { 'Content-Type': 'application/json' },
-        //       body: JSON.stringify({
-        //         username: profile.given_name,
-        //         email: userLinkedInData.email,
-        //         password: 'Test12345'
-        //       })
-        //     });
-        //     data = await res.json();
-        //     if (!data.user) {
-        //       throw new Error('User registration failed');
-        //     }
-        //   }
-        // } catch (error) {
-        //   console.error('An error occurred:', error);
-        //   throw error; // Propagate the error up the call stack
-        // }
-
-        // Authenticate user
-        // res = await fetch(`${process.env.API_URL}/auth/local`, {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     identifier: profile.email,
-        //     password: 'Test12345'
-        //   })
-        // });
-
-        // const authData = await res.json();
       }
     }),
     CredentialsProvider({
@@ -100,7 +51,6 @@ export const authOptions = {
             name: data.user.username,
             email: data.user.email
           };
-
           return { ...sessionUser, jwt: data.jwt }; // Combine user info and JWT into one object
         }
 
@@ -109,10 +59,21 @@ export const authOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user }: { user: any; token: any }) {
-      if (user) {
-        token.jwt = user.jwt;
+    async jwt({ token, user, account }: { user: any; token: any; account: any }) {
+      if (account?.provider === 'linkedin') {
+        const res = await fetch(`${process.env.API_URL}/linkedinAuth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(user)
+        });
+        const data = await res.json();
+        token.jwt = data.jwtToken;
+      } else {
+        if (user) {
+          token.jwt = user.jwt;
+        }
       }
+
       return token;
     },
     async session({ session, token }: { session: any; token: any }) {
@@ -120,7 +81,18 @@ export const authOptions = {
       if (session.user) {
         session.user.id = token.sub as string;
       }
-      return session;
+      // Checking user status on Strapi and updating session
+      const res = await fetch(`${process.env.API_URL}/users/me`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token.jwt}`
+        }
+      });
+      if (res.ok) {
+        return session;
+      } else {
+        return null;
+      }
     }
   },
   pages: {
