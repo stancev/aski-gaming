@@ -37,7 +37,7 @@ const HomeSearch: React.FC<SearchProps> = ({ placeholder }) => {
         <Input
           className="h-12 min-w-[200px] py-8 pl-24 pr-10 xl:h-full xl:w-full xl:text-[16px]"
           placeholder={placeholder}
-          type="text"
+          type="search"
           name="search"
           id="search"
           value={searchValue || ''}
