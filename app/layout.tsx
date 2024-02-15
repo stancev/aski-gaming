@@ -4,6 +4,7 @@ import Provider from '@/components/Provider';
 import Header from '@/components/Header';
 import './globals.css';
 import Footer from '@/components/Footer';
+import { Toaster } from '@/components/ui/toaster';
 
 const poppins = Poppins({ weight: ['400', '500', '600'], subsets: ['latin'] });
 
@@ -15,12 +16,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head />
       <body className={`${poppins.className} bg-[#F6F8FC]`}>
         <Provider>
           <Header />
           {children}
           <Footer />
         </Provider>
+        <Toaster />
       </body>
     </html>
   );

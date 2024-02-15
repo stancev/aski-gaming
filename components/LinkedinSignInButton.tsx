@@ -6,7 +6,7 @@ const GoogleSignInButton = () => {
   return (
     <Button
       className="w-full border border-gray-300 bg-white text-black hover:bg-gray-50"
-      onClick={() => signIn('linkedin', { callbackUrl: 'https://localhost:3000/' || undefined })}
+      onClick={() => signIn('linkedin', { callbackUrl: '/' || undefined })}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

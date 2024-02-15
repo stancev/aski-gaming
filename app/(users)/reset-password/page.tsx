@@ -3,19 +3,18 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import LinkedinSignInButton from '@/components/LinkedinSignInButton';
 import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
-const SignInPage = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [alert, setAlert] = useState({ show: false, message: '' });
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const code = searchParams.get('code');
 
   const handleRegisterUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,33 +26,28 @@ const SignInPage = () => {
       });
       return;
     }
-    const response = await fetch('/api/auth/register', {
+    const response = await fetch('/api/auth/reset-password', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: username,
-        email: email,
-        password: password
+        code: code,
+        password: password,
+        passwordConfirmation: confirmPassword
       })
     });
 
     const data = await response.json();
     if (data.error) {
-      let errorMessage = '';
-      if (data.error.details && Array.isArray(data.error.details.errors)) {
-        const errorMessages = data.error.details.errors
-          .map((error: { path: any[]; message: any }) => `${error.message}`)
-          .join(', ');
-        errorMessage = `${errorMessages}`;
-      } else {
-        errorMessage = data.error.message;
-      }
-      setAlert({ show: true, message: errorMessage });
+      setAlert({ show: true, message: data.error.message });
     }
     if (data.user) {
-      router.push('/signup/success');
+      signIn('credentials', {
+        identifier: data.user.email,
+        password: password,
+        callbackUrl: `/`
+      });
     }
   };
 
@@ -78,12 +72,8 @@ const SignInPage = () => {
           <div className="-mx-4 mt-2 flex-auto bg-white px-4 py-2 shadow-2xl shadow-gray-900/10 sm:mx-0 sm:flex-none sm:rounded-3xl sm:p-12">
             <div className="my-6">
               <h1 className="text-center text-3xl font-medium tracking-tight text-heading">
-                Create a new account
+                Reset your password
               </h1>
-            </div>
-            <LinkedinSignInButton />
-            <div className="mx-auto my-10 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
-              or
             </div>
             <form onSubmit={handleRegisterUser}>
               {alert.show && (
@@ -94,35 +84,9 @@ const SignInPage = () => {
                 </Alert>
               )}
               <div className="mx-auto mb-6 grid w-full items-center gap-1.5">
-                <Label htmlFor="username">Your public name or username</Label>
+                <Label htmlFor="password">New password</Label>
                 <Input
-                  placeholder="Enter your username"
-                  type="text"
-                  id="username"
-                  name="username"
-                  onChange={e => {
-                    setUsername(e.target.value);
-                    handleInputChange();
-                  }}
-                />
-              </div>
-              <div className="mx-auto mb-6 grid w-full items-center gap-1.5">
-                <Label htmlFor="email">Your email address</Label>
-                <Input
-                  placeholder="Enter your email"
-                  type="email"
-                  id="email"
-                  name="email"
-                  onChange={e => {
-                    setEmail(e.target.value);
-                    handleInputChange();
-                  }}
-                />
-              </div>
-              <div className="mx-auto mb-6 grid w-full items-center gap-1.5">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  placeholder="Enter your password"
+                  placeholder="Enter your new password"
                   type="password"
                   id="password"
                   name="password"
@@ -133,9 +97,9 @@ const SignInPage = () => {
                 />
               </div>
               <div className="mx-auto mb-6 grid w-full items-center gap-1.5">
-                <Label htmlFor="confirmPassword">Confirm password</Label>
+                <Label htmlFor="confirmPassword">Confirm new password</Label>
                 <Input
-                  placeholder="Enter your password again"
+                  placeholder="Enter your new password again"
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
@@ -157,4 +121,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default ResetPasswordPage;

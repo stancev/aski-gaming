@@ -18,7 +18,7 @@ import {
 const Header = async () => {
   const session = await getServerSession(authOptions);
   return (
-    <nav className="h-22 mb-26 sticky top-0 z-50 flex justify-center border-b bg-white px-4 py-3 shadow-sm">
+    <nav className="h-22 mb-26 sticky top-0 z-50 flex justify-center border-b bg-white bg-opacity-95 px-4 py-3 shadow-sm">
       <section className="flex w-full max-w-[1424px] items-center">
         <AskiLogo />
         <div className="ml-auto flex items-center space-x-6">
@@ -40,7 +40,7 @@ const Header = async () => {
             )}
           </div>
           {!session ? (
-            <Button asChild className="h-8 w-[90px] md:h-12 md:w-[157px]">
+            <Button asChild className="h-8 w-[90px] hover:text-white md:h-12 md:w-[157px]">
               <Link href="/signin" className="hover:text-primary">
                 Login
               </Link>

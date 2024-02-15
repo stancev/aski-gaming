@@ -38,7 +38,7 @@ export default function DialogDemo() {
               </Link>
             </DialogClose>
             <DialogClose asChild>
-              <Link href="/reviews" className="py-2 text-base leading-10">
+              <Link href="/signup" className="py-2 text-base leading-10">
                 Sign Up
               </Link>
             </DialogClose>
